@@ -88,7 +88,7 @@
             </ul>
           </li>
 
-           @if(Session::get('page')=='sections' || Session::get('page')=='categories' || Session::get('page')=='products' || Session::get('page')=='brands' || Session::get('page')=='banners' || Session::get('page')=='coupons' || Session::get('page')=='shipping_charges' || Session::get('page')=='users' || Session::get('page')=='cms_pages')
+           @if(Session::get('page')=='sections' || Session::get('page')=='categories' || Session::get('page')=='products' || Session::get('page')=='brands' || Session::get('page')=='banners' || Session::get('page')=='coupons' || Session::get('page')=='shipping_charges' || Session::get('page')=='users' || Session::get('page')=='cms_pages' || Session::get('page')=='admins_subadmins')
           <?php $active='active'; ?>
           @else
           <?php $active=''; ?>
@@ -203,6 +203,19 @@
                   <p>CMS Pages</p>
                 </a>
               </li>
+              @if(Auth::guard('admin')->user()->type=='superadmin' || Auth::guard('admin')->user()->type=='admin')
+              @if(Session::get('page')=='admins_subadmins')
+               <?php $active='active'; ?>
+               @else
+               <?php $active=''; ?>
+               @endif
+              <li class="nav-item">
+                <a href="{{url('admin/admins-subadmins')}}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Admins / SubAdmins</p>
+                </a>
+              </li>
+              @endif
               </li>
             </ul>
           </li>

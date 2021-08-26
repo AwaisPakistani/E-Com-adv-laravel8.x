@@ -42,6 +42,29 @@
     });
   });
 
+  // UPdate Admins / Sub Admins status
+  $(".updateAdminsStatus").click(function(){
+    var status=$(this).children('i').attr('status');
+   // alert(status); return false;
+    var admins_id=$(this).attr('admins_id'); 
+    $.ajax({
+      type:'post',
+      url:'/admin/update-adminsSubadmins-status',
+      data:{status:status,admins_id:admins_id},
+      success:function(resp){
+        //alert(resp['status']);
+        //alert(resp['section_id']);
+        if (resp['status']==0) {
+           $('#admins-'+admins_id).html('<i style="font-size: 30px;" class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i>');
+        }else if(resp['status']==1){
+          $('#admins-'+admins_id).html('<i style="font-size: 30px;" class="fas fa-toggle-on" aria-hidden="true" status="Active"></i>');
+        }
+      },error:function(){
+        alert("Error");
+      }
+    });
+  });
+
   // For CAtegories status
 
   $(".updateCategoryStatus").click(function(){

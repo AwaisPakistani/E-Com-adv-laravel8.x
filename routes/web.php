@@ -129,6 +129,11 @@ Route::prefix('admin')->namespace('admin')->group(function () {
      // Edit Front Setting
      Route::match(['get', 'post'], '/edit-front-setting/{id?}', [frontSettingsController::class, 'edit_front_settings']);   
      Route::get('/delete-logo/{id}', [frontSettingsController::class, 'delete_logo']);
+
+     // Admins-Subadmins  
+     Route::get('/admins-subadmins', [AdminController::class, 'admins_subadmins']);
+     Route::post('/update-adminsSubadmins-status', [AdminController::class, 'update_adminsSubadmins_status']);
+     Route::get('/delete-admins-subadmins/{id}', [AdminController::class, 'delete_adminsSubadmins']);
  });
 });
 

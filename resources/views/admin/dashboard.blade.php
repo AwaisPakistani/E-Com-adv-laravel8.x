@@ -12,10 +12,29 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
+        @if(Session::has('error_message')) 
+              <div class="alert alert-danger alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button> 
+                    <strong>{{ Session::get('error_message')}}</strong>
+              </div>
+          @endif   
+
+          @if(Session::has('success_message')) 
+                <div class="alert alert-success alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button> 
+                        <strong>{{ Session::get('success_message')}}</strong>
+                </div>
+          @endif
+          @if(Session::has('flash_message_warning')) 
+                <div class="alert alert-warning alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button> 
+                        <strong>{!! session('flash_message_warning') !!}</strong>
+                </div>
+          @endif
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->

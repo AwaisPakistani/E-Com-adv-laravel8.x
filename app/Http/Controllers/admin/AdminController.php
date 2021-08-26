@@ -125,5 +125,44 @@ class AdminController extends Controller
         }
        // $adminDetails=Admin::get();
         return view('admin.update_admin_details');
+    }//
+
+    public function admins_subadmins(){
+      if (Auth::guard('admin')->user()->type=='subadmin') {
+          Session::flash('error_message','YOu have no access for this action');
+          return redirect('admin/dashboard');
+      }
+      Session::put('put','admins_subadmins');
+      $admins_subadmins=Admin::get();
+      return view('admin.admins_subadmins.admins_subadmins')->with(compact('admins_subadmins'));
+    }//
+    public function update_adminsSubadmins_status(Request $request){
+        if ($request->ajax()) {
+       $data=$request->all();
+        //echo "<pre>"; print_r($data); die();
+       if ($data['status']=='Active') {
+         $status=0;
+       }else{
+         $status=1;
+       }
+       //echo $status; die();
+       Admin::where('id',$data['admins_id'])->update(['status'=>$status]);
+       return response()->json(['status'=>$status,'admins_id'=>$data['admins_id']]);
+       }
+    }//
+    public function delete_adminsSubadmins($id){
+      $image_name=Admin::where('id',$id)->first();
+      //echo "<pre>"; print_r($image_name); die();
+      // Image path
+      $image_path='images/admin/admin_profiles/small/';
+      //check existance and delete image name and delete from folder
+      if (file_exists($image_path.$image_name->image)) {
+          unlink($image_path.$image_name->image);
+      }
+
+      Admin::where('id',$id)->delete();
+     
+      return redirect()->back()->with('success_message','Banner has been deleted successfully');
     }
+
 }
