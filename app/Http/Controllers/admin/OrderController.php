@@ -9,6 +9,8 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\OrderStatus;
 use App\Models\OrdersLog;
+use App\Models\AdminsRole;
+use Auth;
 use Session;
 use Dompdf\Dompdf;
 
@@ -17,7 +19,22 @@ class OrderController extends Controller
     public function orders(){
     	Session::put('page','orders');
         $orders=Order::with('orders_products')->orderBy('id','desc')->get()->toArray();
-    	return view('admin.orders.orders')->with(compact('orders'));
+      // Access roles
+      $orderModuleCoount=AdminsRole::where(['admin_id'=>Auth::guard('admin')->user()->id,'module'=>'orders'])->count();
+       if (Auth::guard('admin')->user()->type=='superadmin') {
+        $orderModuleRole['view_access']=1;
+        $orderModuleRole['edit_access']=1;
+        $orderModuleRole['full_access']=1;
+        }else if ($orderModuleCoount==0) {
+        $message="YOu don't have access to this module";
+        Session::flash('error_message',$message);
+        return redirect('admin/dashboard');
+      }else{
+        $orderModuleRole=AdminsRole::where(['admin_id'=>Auth::guard('admin')->user()->id,'module'=>'orders'])->first()->toArray();
+        //dd($categoryModuleRole); die;
+       # echo "<pre>"; print_r($coupons); die();
+      }
+    	return view('admin.orders.orders')->with(compact('orders','orderModuleRole'));
 
     }//
     public function orders_detail($id){

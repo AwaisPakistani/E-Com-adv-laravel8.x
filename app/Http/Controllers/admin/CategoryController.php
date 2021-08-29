@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Section;
+use App\Models\AdminsRole;
 use Session;
+use Auth;
 use Image;
 
 class CategoryController extends Controller
@@ -15,8 +17,23 @@ class CategoryController extends Controller
     	Session::put('page','categories');
     	$categories=Category::with(['section','parentcategory'])->get();
         $categories=json_decode(json_encode($categories));
+      // Categories restriction
+      $categoryModuleCoount=AdminsRole::where(['admin_id'=>Auth::guard('admin')->user()->id,'module'=>'categories'])->count();
+      if (Auth::guard('admin')->user()->type=='superadmin') {
+        $categoryModuleRole['view_access']=1;
+        $categoryModuleRole['edit_access']=1;
+        $categoryModuleRole['full_access']=1;
+      }
+      else if ($categoryModuleCoount==0) {
+        $message="YOu don't have access to this module";
+        Session::flash('error_message',$message);
+        return redirect('admin/dashboard');
+      }else{
+        $categoryModuleRole=AdminsRole::where(['admin_id'=>Auth::guard('admin')->user()->id,'module'=>'categories'])->first()->toArray();
+        //dd($categoryModuleRole); die;
        # echo "<pre>"; print_r($categories); die();
-    	return view('admin.categories.categories')->with(compact('categories'));
+      }
+    	return view('admin.categories.categories')->with(compact('categories','categoryModuleRole'));
     }
 
     public function update_category_status(Request $request){

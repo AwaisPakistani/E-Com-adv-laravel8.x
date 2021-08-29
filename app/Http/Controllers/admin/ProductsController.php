@@ -10,6 +10,8 @@ use App\Models\Category;
 use App\Models\ProductsAttribute;
 use App\Models\ProductsImage;
 use App\Models\Brand;
+use App\Models\AdminsRole;
+use Auth;
 use Session;
 use Image;
 
@@ -22,9 +24,24 @@ class ProductsController extends Controller
     		,'section'=>function($query){
     			$query->select('id','name');
     		}])->get();
+      $productModuleCoount=AdminsRole::where(['admin_id'=>Auth::guard('admin')->user()->id,'module'=>'products'])->count();
+      if (Auth::guard('admin')->user()->type=='superadmin') {
+        $productModuleRole['view_access']=1;
+        $productModuleRole['edit_access']=1;
+        $productModuleRole['full_access']=1;
+      }
+      else if ($productModuleCoount==0) {
+        $message="YOu don't have access to this module";
+        Session::flash('error_message',$message);
+        return redirect('admin/dashboard');
+      }else{
+        $productModuleRole=AdminsRole::where(['admin_id'=>Auth::guard('admin')->user()->id,'module'=>'products'])->first()->toArray();
+        //dd($categoryModuleRole); die;
+       # echo "<pre>"; print_r($categories); die();
+      }
     	//$products=json_decode(json_encode($products));
     	//echo "<pre>"; print_r($products); die();
-    	return view('admin.products.products')->with(compact('products'));
+    	return view('admin.products.products')->with(compact('products','productModuleRole'));
     }
 
     public function update_product_status(Request $request){
@@ -160,18 +177,28 @@ class ProductsController extends Controller
                }
             }
             //Video Add code
-             if ($request->hasFile('product_video')) {
+            /* if ($request->hasFile('product_video')) {
                $video_tmp=$request->file('product_video');
+
                if ($video_tmp->isValid()) {
                    $Org_VideoName=$video_tmp->getClientOriginalName();
                    $videoExt=$video_tmp->getClientOriginalExtension();
                    $videoName=$Org_VideoName."-".rand().'.'.$videoExt;
-                   $videoName=$Org_VideoName."-".rand().'.'.$videoExt;
+                   //$videoName=$Org_VideoName."-".rand().'.'.$videoExt;
                    $videoPath="videos/admin/products/".$videoName;
                    $video_tmp->move($videoPath,$videoName);
 
                    $products->product_video=$videoName;
+                   //
+                  
                }
+            }*/
+             if ($request->hasFile('product_video')) {
+                $video_tmp=$data['product_video'];
+                $video_name=$video_tmp->getClientOriginalName();
+                $video_path='videos/admin/products/';
+                $video_tmp->move($video_path,$video_name);
+                $products->product_video=$video_name;
             }
 
             $category_detail=Category::find($data['category_id']);

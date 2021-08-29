@@ -22,14 +22,14 @@
 				<div id="aside" class="col-md-3">
 
 					<!-- aside widget -->
-					<div class="aside">
+					<!-- <div class="aside">
 						<h3 class="aside-title">Filter by Price</h3>
 						<div id="price-slider"></div>
-					</div>
+					</div> -->
 					<!-- aside widget -->
                     
 					<!-- aside widget -->
-					<div class="aside">
+					<!-- <div class="aside">
 						<h3 class="aside-title">Filter By Color:</h3>
 						<ul class="color-option">
 							<li><a href="#" style="background-color:#475984;"></a></li>
@@ -40,21 +40,30 @@
 							<li><a href="#" style="background-color:#050505;"></a></li>
 							<li><a href="#" style="background-color:#D5B47B;"></a></li>
 						</ul>
-					</div>
+					</div> -->
 					<!-- /aside widget -->
 
 					<!-- aside widget -->
-					<div class="aside">
+					<!-- <div class="aside">
 						<h3 class="aside-title">Filter By Size:</h3>
 						<ul class="size-option">
 							<li class="active"><a href="#">S</a></li>
 							<li class="active"><a href="#">XL</a></li>
 							<li><a href="#">SL</a></li>
 						</ul>
-					</div>
+					</div> -->
 					<!-- /aside widget -->
 					<!-- aside widget -->
 					@if(!isset($_REQUEST['search']))
+					<!-- aside widget -->
+					<div class="aside">
+						<h3 class="aside-title">Filter By Brand:</h3>
+						<ul class="size-option">
+							@foreach($brandArray as $brand)
+							<li><input class="brand" type="checkbox" name="brand[]" id="{{$brand}}" value="{{$brand}}">&nbsp;&nbsp;{{$brand}}</li>
+							@endforeach
+						</ul>
+					</div>
 					<div class="aside">
 						<h3 class="aside-title">Filter By Fabric:</h3>
 						<ul class="size-option">
@@ -64,7 +73,7 @@
 						</ul>
 					</div>
 					<!-- /aside widget -->
-					<!-- aside widget -->
+					
 					<div class="aside">
 						<h3 class="aside-title">Filter By Sleeve:</h3>
 						<ul class="size-option">
@@ -106,16 +115,6 @@
 					@endif
 					<!-- /aside widget -->
                  
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter by Brand</h3>
-						<ul class="list-links">
-							<li><a href="#">Nike</a></li>
-							<li><a href="#">Adidas</a></li>
-							<li><a href="#">Polo</a></li>
-							<li><a href="#">Lacost</a></li>
-						</ul>
-					</div>
 					<!-- /aside widget -->
 
 					<!-- aside widget -->

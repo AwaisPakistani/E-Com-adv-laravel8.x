@@ -77,11 +77,13 @@
                     <td>{{$order['order_status']}}</td>
                     <td>{{$order['payment_method']}}</td>
                     <td>
+                      @if($orderModuleRole['edit_access']==1 || $orderModuleRole['full_access']==1)
                       <a title="View Order Detail" href="{{url('/admin/orders/'.$order['id'])}}" class="btn btn-success btn-sm"><i class="fa fa-file"></i></a>
                       @if($order['order_status']=="Shipped" || $order['order_status']=="Delievered")
                       <a title="View Order Invoice" href="{{url('/admin/view-order-invoice/'.$order['id'])}}" class="btn btn-success btn-sm"><i class="fa fa-print"></i></a>
 
                       <a title="Print PDF Invoice" href="{{url('/admin/print-pdf-invoice/'.$order['id'])}}" class="btn btn-success btn-sm"><i class="far fa-file-pdf"></i></a>
+                      @endif
                       @endif
                     </td>
                   </tr>

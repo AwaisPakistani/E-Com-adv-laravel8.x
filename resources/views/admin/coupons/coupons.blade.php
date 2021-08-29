@@ -76,14 +76,23 @@
                   <td>{{ $cop->coupon_option }}</td>
                   <td>{{ $cop->expiry_date }}</td>
                   <td>
+                  @if($couponModuleRole['edit_access']==1 || $couponModuleRole['full_access']==1)
                   @if($cop->status==1)
                   <a class="updateCouponStatus" id="coupon-{{$cop->id}}" coupon_id="{{ $cop->id }}" href="javascript:void(0);"><i style="font-size: 30px;" class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
                   @else
                   <a class="updateCouponStatus" id="coupon-{{$cop->id}}" coupon_id="{{ $cop->id }}" href="javascript:void(0);"><i style="font-size: 30px;" class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
                   @endif
+                  @endif
                   </td>
-                  <td><a href="{{url('admin/delete-coupon/'.$cop->id)}}" onclick="return confirm('Are you sure you want to delete this coupon?')" class="btn btn-danger" btn-sm><i class="fas fa-trash"></i></a>
-                   <a href="{{url('admin/add-edit-coupon/'.$cop->id)}}" class="btn btn-success" btn-sm><i class="fas fa-edit"></i></a></td>
+                  
+                  <td>
+                  @if($couponModuleRole['full_access']==1)
+                  <a href="{{url('admin/delete-coupon/'.$cop->id)}}" onclick="return confirm('Are you sure you want to delete this coupon?')" class="btn btn-danger" btn-sm><i class="fas fa-trash"></i></a>
+                  @endif
+                  @if($couponModuleRole['edit_access']==1 || $couponModuleRole['full_access']==1)
+                   <a href="{{url('admin/add-edit-coupon/'.$cop->id)}}" class="btn btn-success" btn-sm><i class="fas fa-edit"></i></a>
+                  @endif
+                 </td>
                   
                 </tr>
                @endforeach

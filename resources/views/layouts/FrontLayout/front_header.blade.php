@@ -53,10 +53,17 @@
 					<div class="header-search">
 						<form action="{{url('/search-products')}}" method="get">@csrf 
 							<input name="search" class="input search-input" type="text" placeholder="Enter your keyword">
-							<select class="input search-categories">
+							<select name="category_search" class="input search-categories">
 								<option value="0">All Categories</option>
-								<option value="1">Category 01</option>
-								<option value="1">Category 02</option>
+								@foreach($categories as $sec)
+                                <optgroup label="{{$sec->name}}"></optgroup>
+                                @foreach($sec->categories as $cat)
+                                  <option value="{{ $cat->category_name }}">&nbsp;&nbsp;{{ $cat->category_name }}</option>
+                                  @foreach($cat->sub_categories as $sub)
+                                       <option value="{{ $sub->category_name }}" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $sub->category_name }}</option>
+                                  @endforeach   
+                                @endforeach
+                                @endforeach
 							</select>
 							<button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
 						</form>

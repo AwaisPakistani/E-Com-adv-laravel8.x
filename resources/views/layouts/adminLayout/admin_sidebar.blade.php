@@ -37,7 +37,7 @@
               </p>
             </a>
           </li>
-          @if(Session::get('page')=='settings' || Session::get('page')=='update-admin-details' || Session::get('page')=='frontSettings')
+          @if(Session::get('page')=='settings' || Session::get('page')=='update-admin-details' || Session::get('page')=='frontSettings' || Session::get('page')=='othersSettings')
           <?php $active='active'; ?>
           @else
           <?php $active=''; ?>
@@ -60,6 +60,17 @@
                 <a href="{{url('admin/front-settings')}}" class="nav-link  {{ $active }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Front Settings</p>
+                </a>
+              </li>
+              @if(Session::get('page')=='othersSettings')
+               <?php $active='active'; ?>
+               @else
+               <?php $active=''; ?>
+               @endif
+              <li class="nav-item">
+                <a href="{{url('admin/update-others-settings')}}" class="nav-link  {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Update Cart Settings</p>
                 </a>
               </li>
                @if(Session::get('page')=='settings')
@@ -88,7 +99,7 @@
             </ul>
           </li>
 
-           @if(Session::get('page')=='sections' || Session::get('page')=='categories' || Session::get('page')=='products' || Session::get('page')=='brands' || Session::get('page')=='banners' || Session::get('page')=='coupons' || Session::get('page')=='shipping_charges' || Session::get('page')=='users' || Session::get('page')=='cms_pages' || Session::get('page')=='admins_subadmins')
+           @if(Session::get('page')=='sections' || Session::get('page')=='categories' || Session::get('page')=='products' || Session::get('page')=='brands' || Session::get('page')=='banners' || Session::get('page')=='coupons' || Session::get('page')=='shipping_charges' || Session::get('page')=='users' || Session::get('page')=='cms_pages' || Session::get('page')=='adminsSubadmins')
           <?php $active='active'; ?>
           @else
           <?php $active=''; ?>
@@ -204,7 +215,7 @@
                 </a>
               </li>
               @if(Auth::guard('admin')->user()->type=='superadmin' || Auth::guard('admin')->user()->type=='admin')
-              @if(Session::get('page')=='admins_subadmins')
+              @if(Session::get('page')=='adminsSubadmins')
                <?php $active='active'; ?>
                @else
                <?php $active=''; ?>

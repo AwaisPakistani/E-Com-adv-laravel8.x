@@ -150,7 +150,8 @@ use App\Models\Product;
 							<ul class="tab-nav">
 								<li class="active"><a data-toggle="tab" href="#description">Description</a></li>
 								<li><a data-toggle="tab" href="#tab1">Details</a></li>
-								<li><a data-toggle="tab" href="#tab2">Reviews (3)</a></li>
+								<li><a data-toggle="tab" href="#tab2">Product Video</a></li>
+								<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
 							</ul>
 							<div class="tab-content">
 								<div id="description" class="tab-pane fade in active">
@@ -184,6 +185,18 @@ use App\Models\Product;
 									</p>
 								</div>
 								<div id="tab2" class="tab-pane fade in">
+
+									<p>
+										<?php $path=$productDetail['product_video']; ?></p>
+									@if(!empty($path))
+									<video controls="" width="640" height="360px">
+										<source src="{{url('videos/admin/products/'.$path)}}" type="video/mp4">
+									</video>
+									@else
+									<p>Video not available.</p>
+									@endif
+								</div>
+								<div id="tab3" class="tab-pane fade in">
 
 									<div class="row">
 										<div class="col-md-6">

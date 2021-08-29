@@ -20,6 +20,8 @@ use App\Models\Country;
 use App\Models\Order;
 use App\Models\OrdersProduct;
 use App\Models\ShippingCharge;
+use App\Models\OthersSetting;
+use App\Models\Brand;
 use DB;
 use Session;
 use Auth;
@@ -34,7 +36,7 @@ class ProductController extends Controller
     		//echo "<pre>"; print_r($data); die();
     		//dd($data); die();
     		$categoryCounnt=Category::where(['category_url'=>$url,'status'=>1])->count();
-    	   if ($categoryCounnt > 0) {
+    	    if ($categoryCounnt > 0) {
     		//echo "Category exists"; die();
     		$categoryDetails=Category::catDetails($url);
     		// without pagination
@@ -43,6 +45,11 @@ class ProductController extends Controller
     		$categoryProducts=Product::with('brand')->whereIn('category_id',$categoryDetails['catIds'])->where('status',1);
             //echo $data['sort']; die();
             //echo "<pre>"; print_r($data); die();
+            if (isset($data['brand']) && !empty($data['brand'])) {
+            $brandIds=Brand::select('id')->whereIn('name',$data['brand'])->pluck('id');
+            //dd($brandIds); die;
+            $categoryProducts->whereIn('products.brand_id',$brandIds);
+            }
             if (isset($data['fabric']) && !empty($data['fabric'])) {
             $categoryProducts->whereIn('products.fabric',$data['fabric']);
             }
@@ -87,15 +94,18 @@ class ProductController extends Controller
             $patternArray=$products_filters['patternArray'];
             $fitArray=$products_filters['fitArray'];
             $occassionArray=$products_filters['occassionArray'];
+            // Brand Array
+            $brandArray=Brand::select('name')->where('status',1)->pluck('name');
+            //dd($brandArray); die;
 
-    		return view('front.products.ajax_products_listing')->with(compact('categoryDetails','categoryProducts','showSide','url','fabricArray','sleeveArray','patternArray','fitArray','occassionArray'));
+    		return view('front.products.ajax_products_listing')->with(compact('categoryDetails','categoryProducts','showSide','url','fabricArray','sleeveArray','patternArray','brandArray','fitArray','occassionArray'));
     	    }else{
     	    	abort(404);
     	    }
     	}else{
         $url=Route::getFacadeRoot()->current()->uri();
     	$categoryCounnt=Category::where(['category_url'=>$url,'status'=>1])->count();
-        if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
+        if ((isset($_REQUEST['search']) && !empty($_REQUEST['search'])) || (isset($_REQUEST['category_search']) && !empty($_REQUEST['category_search']))) {
             $search_product=$_REQUEST['search'];
             $categoryDetails['breadcrumbs']=$search_product;
             $categoryDetails['catDetails']['category_name']=$search_product;
@@ -112,7 +122,7 @@ class ProductController extends Controller
             return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','showSide','page_name'));
 
         }
-    	elseif ($categoryCounnt > 0) {
+    	else if ($categoryCounnt > 0) {
     		//echo "Category exists"; die();
     		$categoryDetails=Category::catDetails($url);
     		// without pagination
@@ -149,8 +159,10 @@ class ProductController extends Controller
         $patternArray=$products_filters['patternArray'];
         $fitArray=$products_filters['fitArray'];
         $occassionArray=$products_filters['occassionArray'];
+        // Brand Filter
+        $brandArray=Brand::select('name')->where('status',1)->pluck('name');
         $page_name='';
-    		return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','showSide','url','fabricArray','sleeveArray','patternArray','fitArray','occassionArray','page_name','meta_title','meta_description','meta_keywords'));
+    		return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','showSide','url','fabricArray','sleeveArray','patternArray','fitArray','occassionArray','page_name','meta_title','meta_description','meta_keywords','brandArray'));
     	}else{
     		abort(404);
     	}
@@ -432,6 +444,18 @@ class ProductController extends Controller
          $total_price=$total_price+($attrPrice['final_price']*$item['quantity']);
          //echo "<pre>"; print_r($total_weight); die;
         }
+        $CartSetting=OthersSetting::where('id',1)->first()->toArray();
+        // Restriction for Minimum amount
+        if ($total_price<$CartSetting['min_cart_value']) {
+            $error_message="MInimum Cart amount must be ". $CartSetting['min_cart_value']." rupees";
+            Session::flash('error_message',$error_message);
+            return redirect()->back();
+        }
+        if ($total_price>$CartSetting['max_cart_value']) {
+            $error_message="Maximum Cart amount must be ". $CartSetting['max_cart_value']." rupees";
+            Session::flash('error_message',$error_message);
+            return redirect()->back();
+        }
         //echo "<pre>"; print_r($total_weight); die;
 
         //echo $total_weight; die;
@@ -685,7 +709,7 @@ class ProductController extends Controller
                 echo "<label style='color:red;'>This pincode is not valid</label>";
             }
         }
-    }
+    }//
     
 
 }

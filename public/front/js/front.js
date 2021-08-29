@@ -11,6 +11,7 @@ $(document).ready(function(){
   // sorting using ajax
   $("#sort").change(function(){
      //alert('check');
+     var brand=get_filter('brand');
      var occassion=get_filter('occassion');
      var fit=get_filter('fit');
      var pattern=get_filter('pattern'); 
@@ -21,7 +22,7 @@ $(document).ready(function(){
      $.ajax({
        url:url,
        type:"get",
-       data:{occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
+       data:{brand:brand,occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
        success:function(data){
        $('.filter_products').html(data);
        },error:function(){
@@ -32,6 +33,7 @@ $(document).ready(function(){
   
   // For filters
   $('.fabric').click(function(){
+     var brand=get_filter('brand');
      var occassion=get_filter('occassion');
      var fit=get_filter('fit');
      var pattern=get_filter('pattern'); 
@@ -43,7 +45,29 @@ $(document).ready(function(){
      $.ajax({
        url:url,
        type:"get",
-       data:{occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
+       data:{brand:brand,occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
+       success:function(data){
+       $('.filter_products').html(data);
+       },error:function(){
+        alert('error');
+       }
+     });
+  });
+   // For filters
+  $('.brand').click(function(){
+     var brand=get_filter('brand');
+     var occassion=get_filter('occassion');
+     var fit=get_filter('fit');
+     var pattern=get_filter('pattern'); 
+     var fabric=get_filter('fabric');
+     var sleeve=get_filter('sleeve');
+     var sort=$('#sort option:selected').val();
+     var url=$('#url').val();
+     //alert(sort);
+     $.ajax({
+       url:url,
+       type:"get",
+       data:{brand:brand,occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
        success:function(data){
        $('.filter_products').html(data);
        },error:function(){
@@ -53,6 +77,7 @@ $(document).ready(function(){
   });
   
   $('.sleeve').click(function(){
+     var brand=get_filter('brand');
      var occassion=get_filter('occassion');
      var fit=get_filter('fit');
      var pattern=get_filter('pattern'); 
@@ -63,7 +88,7 @@ $(document).ready(function(){
      $.ajax({
        url:url,
        type:"get",
-       data:{occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
+       data:{brand:brand,occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
        success:function(data){
        $('.filter_products').html(data);
        },error:function(){
@@ -73,6 +98,7 @@ $(document).ready(function(){
   });
  
   $('.pattern').click(function(){
+     var brand=get_filter('brand');
      var occassion=get_filter('occassion');
      var fit=get_filter('fit');
      var pattern=get_filter('pattern'); 
@@ -83,7 +109,7 @@ $(document).ready(function(){
      $.ajax({
        url:url,
        type:"get",
-       data:{occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
+       data:{brand:brand,occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
        success:function(data){
        $('.filter_products').html(data);
        },error:function(){
@@ -93,6 +119,7 @@ $(document).ready(function(){
   });
 
   $('.fit').click(function(){
+     var brand=get_filter('brand');
      var occassion=get_filter('occassion');
      var fit=get_filter('fit');
      var pattern=get_filter('pattern'); 
@@ -103,7 +130,7 @@ $(document).ready(function(){
      $.ajax({
        url:url,
        type:"get",
-       data:{occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
+       data:{brand:brand,occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
        success:function(data){
        $('.filter_products').html(data);
        },error:function(){
@@ -113,6 +140,7 @@ $(document).ready(function(){
   });
 
   $('.occassion').click(function(){
+     var brand=get_filter('brand');
      var occassion=get_filter('occassion');
      var fit=get_filter('fit');
      var pattern=get_filter('pattern'); 
@@ -123,7 +151,7 @@ $(document).ready(function(){
      $.ajax({
        url:url,
        type:"get",
-       data:{occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
+       data:{brand:brand,occassion:occassion,fit:fit,pattern:pattern,fabric:fabric,sleeve:sleeve,sort:sort,url:url},
        success:function(data){
        $('.filter_products').html(data);
        },error:function(){

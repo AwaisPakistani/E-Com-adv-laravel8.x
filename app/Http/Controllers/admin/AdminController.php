@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 use App\Models\AdminsRole;
+use App\Models\OthersSetting;
 use Session;
 use Image;
 class AdminController extends Controller
@@ -129,11 +130,12 @@ class AdminController extends Controller
     }//
 
     public function admins_subadmins(){
+      Session::put('put','adminsSubadmins');
       if (Auth::guard('admin')->user()->type=='subadmin') {
           Session::flash('error_message','YOu have no access for this action');
           return redirect('admin/dashboard');
       }
-      Session::put('put','admins_subadmins');
+      
       $admins_subadmins=Admin::get();
       return view('admin.admins_subadmins.admins_subadmins')->with(compact('admins_subadmins'));
     }//
@@ -264,6 +266,21 @@ class AdminController extends Controller
       //echo "<pre>"; print_r($adminRoles); die;
       $title="Update ".$adminDetail['name']." [".$adminDetail['type']."] Roles/Permissions";
       return view('admin.admins_subadmins.update_roles')->with(compact('title','adminDetail','adminRoles'));
+    }//
+    public function update_others_settings(Request $request){
+      Session::put('page','othersSettings');
+      $update_others_settings=OthersSetting::where('id',1)->first()->toArray();
+      //dd($others_settings); die;
+      $title="Other Settings";
+      if ($request->isMethod('post')) {
+        $data=$request->all();
+        //dd($data); die;
+        OthersSetting::where('id',1)->update(['min_cart_value'=>$data['min_cart_value'],'max_cart_value'=>$data['max_cart_value']]);
+        $message="Cart settings has been updated successfully";
+        Session::flash('success_message',$message);
+        return redirect()->back();
+      }
+      return view('admin.settings.others_settings')->with(compact('update_others_settings','title'));
     }//
 
 }

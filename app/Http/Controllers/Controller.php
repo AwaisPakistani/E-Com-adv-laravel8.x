@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Models\CmsPage;
 use App\Models\frontSetting;
+use App\Models\Section;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -28,10 +29,14 @@ class Controller extends BaseController
         $icons[]='';
        }
     $pages=json_decode(json_encode($pages));
+    // Categories
+    $categories=section::with('categories')->get();
+    $categories=json_decode(json_encode($categories));
      view()->share([
         'pages'=>$pages,
         'setting'=>$settings,
         'icons'=>$icons,
+        'categories'=>$categories,
       ]);
    }//
 }

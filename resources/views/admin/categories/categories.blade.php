@@ -75,14 +75,21 @@
                   <td>{{ $cat->category_url }}</td>
 
                   <td>
+                  @if($categoryModuleRole['edit_access']==1 || $categoryModuleRole['full_access']==1)
                   @if($cat->status==1)
                   <a class="updateCategoryStatus" id="category-{{$cat->id}}" category_id="{{ $cat->id }}" href="javascript:void(0);"><i style="font-size: 30px;" class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
                   @else
                   <a class="updateCategoryStatus" id="category-{{$cat->id}}" category_id="{{ $cat->id }}" href="javascript:void(0);"><i style="font-size: 30px;" class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
                   @endif
+                  @endif
                   </td>
-                  <td> <a href="{{url('admin/delete-category/'.$cat->id)}}" onclick="return confirm('Are you sure you want to delete this category?')" class="btn btn-danger" btn-sm><i class="fas fa-trash"></i></a>
+                  <td> 
+                  @if($categoryModuleRole['full_access']==1)
+                  <a href="{{url('admin/delete-category/'.$cat->id)}}" onclick="return confirm('Are you sure you want to delete this category?')" class="btn btn-danger" btn-sm><i class="fas fa-trash"></i></a>
+                  @endif
+                  @if($categoryModuleRole['edit_access']==1 || $categoryModuleRole['full_access']==1)
                    <a href="{{url('admin/add-edit-category/'.$cat->id)}}" class="btn btn-success" btn-sm><i class="fas fa-edit"></i></a>
+                  @endif
                   </td>
                   
                 </tr>

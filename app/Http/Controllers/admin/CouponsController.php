@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Coupon;
 use App\Models\Section;
 use App\Models\User;
+use App\Models\AdminsRole;
+use Auth;
 use Session;
 
 class CouponsController extends Controller
@@ -14,7 +16,22 @@ class CouponsController extends Controller
     public function coupons(){
     	Session::put('page','coupons');
     	$coupons=Coupon::get();
-    	return view('admin.coupons.coupons')->with(compact('coupons'));
+
+        $couponModuleCoount=AdminsRole::where(['admin_id'=>Auth::guard('admin')->user()->id,'module'=>'coupons'])->count();
+        if (Auth::guard('admin')->user()->type=='superadmin') {
+        $couponModuleRole['view_access']=1;
+        $couponModuleRole['edit_access']=1;
+        $couponModuleRole['full_access']=1;
+        }else if ($couponModuleCoount==0) {
+          $message="YOu don't have access to this module";
+          Session::flash('error_message',$message);
+          return redirect('admin/dashboard');
+        }else{
+        $couponModuleRole=AdminsRole::where(['admin_id'=>Auth::guard('admin')->user()->id,'module'=>'coupons'])->first()->toArray();
+        //dd($categoryModuleRole); die;
+       # echo "<pre>"; print_r($coupons); die();
+      }
+    	return view('admin.coupons.coupons')->with(compact('coupons','couponModuleRole'));
     }
     
     public function update_coupon_status(Request $request){
