@@ -115,15 +115,17 @@
                     <div class="input-group">
                       <div class="custom-file">
                         <input type="file" name="category_image" class="custom-file-input"  id="category_image" accept="image/*">
+                        <input type="hidden" name="category_image" class="custom-file-input">
                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                       </div>
                       <div class="input-group-append">
                         <span class="input-group-text" id="">Upload</span>
                       </div>
-                    </div>
+                    </div><br>
                       @if(!empty($category_u->category_image))
+                      <input type="hidden" name="category_image" class="custom-file-input" value="{{$category_u->category_image}}">
                       <img src="{{asset('images/admin/categories/small/'.$category_u->category_image)}}" width="100px" height="100px">
-                      &nbsp; <a href="{{url('admin/delete-category-image/'.$category_u->id)}}" class="btn btn-warning" onclick="return confirm('Are you sure you want to delete this category?')">Delete Image</a>  
+                      &nbsp; <a href="{{url('admin/delete-category-image/'.$category_u->id)}}" class="btn btn-warning" onclick="return confirm('Are you sure you want to delete this Category?')">Delete Image</a>  
                       @endif
                 </div>
                  <div class="form-group">

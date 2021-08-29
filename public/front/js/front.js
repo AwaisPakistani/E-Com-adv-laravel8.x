@@ -182,13 +182,14 @@ $(document).ready(function(){
       data:{size:size,product_id:product_id},
       type:'post',
       success:function(resp){
+        $('.currency_exchanges').hide();
         //alert(resp['product_discount']);
         //alert(resp['product_price']);
         //return false;
         if (resp['product_discount']>0) {
-        $('.getAttrPrice').html(resp['product_discount']+'<del style="color:red; font-size:15px;">&nbsp PKR : '+resp['product_price']+'</del>');
+        $('.getAttrPrice').html(resp['product_discount']+'<del style="color:red; font-size:15px;">&nbsp; PKR : '+resp['product_price']+'</del>'+resp['currency']);
         }else{  
-        $('.getAttrPrice').text(resp['product_price']);
+        $('.getAttrPrice').html('<span style="font-weight:normal;">'+resp['product_price']+'<br>'+resp['currency']+'</span><br>');
         }
       },error:function(){
         alert('error');

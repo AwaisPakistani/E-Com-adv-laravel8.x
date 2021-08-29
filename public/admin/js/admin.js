@@ -87,6 +87,28 @@
       }
     });
   });
+   // For Currencies status
+
+  $(".updateCurrencytatus").click(function(){
+    var status=$(this).children('i').attr('status');
+    //alert(status); return false;
+    var currency_id=$(this).attr('currency_id');
+    $.ajax({
+      type:'post',
+      url:'/admin/update-currency-status',
+      data:{status:status,currency_id:currency_id},
+      success:function(resp){
+        //alert(resp); return false;
+        if (resp['status']==0) {
+          $('#currency-'+currency_id).html('<i style="font-size: 30px;" class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i>');
+        }else if(resp['status']==1){
+          $('#currency-'+currency_id).html('<i style="font-size: 30px;" class="fas fa-toggle-on" aria-hidden="true" status="Active"></i>');
+        }
+      },error:function(){
+        alert("Error");
+      }
+    });
+  });
 
   //Appedn categories Level
   $('#section_id').change(function(){ 

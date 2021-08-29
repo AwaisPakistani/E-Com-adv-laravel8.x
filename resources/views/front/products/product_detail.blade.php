@@ -70,16 +70,30 @@ use App\Models\Product;
 						<div class="product-body">
 							<input type="hidden" name="product_id" value="{{ $productDetail['id'] }}">
 							<h2 class="product-name">{{$productDetail['product_name']}}</h2>
-							<h3 class="product-price">PKR : <span class="getAttrPrice">
+							<h3 class="product-price">PKR : <span class="getAttrPrice" style="font-weight: normal;">
+							
 								<?php echo $discountedPrice=Product::getDiscountedPrice($productDetail['id']); ?>
+
 							</span>
 							<del class="product-old-price">
 								@if(!isset($discountedPrice))
 								PKR : {{$productDetail['product_price']}}
 								@endif
 							</del>
+							<br>
+							
 							
 						    </h3>
+						    <div class="currency_exchanges" style="font-weight:normal; font-size:20px;">
+								<p>
+								@foreach($getCurrencies as $currency)
+								{{$currency['currency_code']}} : 
+								<?php $currencyConvert=$productDetail['product_price']/$currency['currency_rate'];
+                                 echo round($currencyConvert,2);
+								 ?>
+								 <br>
+								@endforeach
+							</div>
 							<div>
 								<div class="product-rating">
 									<i class="fa fa-star"></i>

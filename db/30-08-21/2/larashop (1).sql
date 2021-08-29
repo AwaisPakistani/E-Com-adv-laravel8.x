@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2021 at 10:09 AM
+-- Generation Time: Aug 29, 2021 at 03:22 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -79,9 +79,10 @@ INSERT INTO `admins_roles` (`id`, `admin_id`, `module`, `view_access`, `edit_acc
 (14, 6, 'products', 0, 1, 0, NULL, NULL),
 (15, 6, 'coupons', 1, 0, 1, NULL, NULL),
 (16, 6, 'orders', 0, 1, 0, NULL, NULL),
-(65, 5, 'products', 0, 1, 1, NULL, NULL),
-(66, 5, 'coupons', 0, 0, 1, NULL, NULL),
-(67, 5, 'orders', 0, 0, 1, NULL, NULL);
+(68, 5, 'categories', 0, 0, 1, NULL, NULL),
+(69, 5, 'products', 0, 1, 1, NULL, NULL),
+(70, 5, 'coupons', 0, 0, 1, NULL, NULL),
+(71, 5, 'orders', 0, 0, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -206,7 +207,8 @@ INSERT INTO `categories` (`id`, `parent_id`, `section_id`, `category_name`, `cat
 (12, 0, 2, 'Formal Suits', '36336.jpg', 80.00, 'Category Description', 'formal-suits', 'meta title', 'meta Description', 'meta keywords', 1, '2020-12-22 06:49:36', '2020-12-22 06:49:36'),
 (13, 0, 3, 'Girls dresses', '41300.jpg', 15.00, 'Category Description', 'girl-suit', 'meta title', 'Category Description', 'meta keywords', 1, '2020-12-22 06:51:21', '2021-08-16 17:38:59'),
 (14, 13, 3, 'Casual', '31619.jpg', 5.00, 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'casual-girls-kids', 'casual girls kids', 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'kids girls dresses, kids dresses', 1, '2021-08-16 18:18:07', '2021-08-16 18:18:07'),
-(15, 8, 3, 'Casual', '86399.jpg', 5.00, 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'casual-boys-kids', 'casual boys kids', 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'boys kids dresses, boys dresses, kidss dresses', 1, '2021-08-16 18:20:49', '2021-08-16 18:20:49');
+(15, 8, 3, 'Casual', '86399.jpg', 5.00, 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'casual-boys-kids', 'casual boys kids', 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'boys kids dresses, boys dresses, kidss dresses', 1, '2021-08-16 18:20:49', '2021-08-16 18:20:49'),
+(16, 0, 2, 'Nighties', '65430.jpg-10517.jpg', 0.00, 'nighties', 'nighties', 'Nighties', 'nighties', 'Girls dresses, girls nighties, nighty', 1, '2021-08-29 19:14:04', '2021-08-29 19:47:20');
 
 -- --------------------------------------------------------
 
@@ -1573,6 +1575,32 @@ INSERT INTO `coupons` (`id`, `coupon_option`, `coupon_code`, `categories`, `user
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `currencies`
+--
+
+CREATE TABLE `currencies` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `currency_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_rate` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `currencies`
+--
+
+INSERT INTO `currencies` (`id`, `currency_code`, `currency_rate`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'SD', '40', 1, NULL, NULL),
+(2, 'GBP', '224', 1, NULL, NULL),
+(3, 'EUR', '190', 1, NULL, NULL),
+(4, 'YEN', '50', 1, NULL, NULL),
+(5, 'USD', '165', 1, NULL, '2021-08-29 16:30:43');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `delievery_addresses`
 --
 
@@ -1688,7 +1716,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (32, '2021_08_18_125142_create_front__settings_table', 26),
 (33, '2021_08_18_131010_create_front_settings_table', 27),
 (34, '2021_08_27_221455_create_admins_roles_table', 28),
-(35, '2021_08_28_212412_create_others_settings_table', 29);
+(35, '2021_08_28_212412_create_others_settings_table', 29),
+(36, '2021_08_29_084536_create_currencies_table', 30),
+(37, '2021_08_29_130503_create_ratings_table', 31);
 
 -- --------------------------------------------------------
 
@@ -3154,7 +3184,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `section_id`, `brand_id`, `product_name`, `product_code`, `product_color`, `group_code`, `product_price`, `product_discount`, `product_weight`, `product_video`, `main_image`, `description`, `wash_care`, `fabric`, `pattern`, `sleeve`, `fit`, `occassion`, `meta_title`, `meta_description`, `meta_keywords`, `is_featured`, `status`, `created_at`, `updated_at`) VALUES
-(1, 4, 1, 2, 'Black Casual T-shirt', 'Bl-01', 'black', '', '1000', '', '200', 'SampleVideo_1280x720_1mb.mp4', 'tate-logo-black--tshirt-back-g1086.jpg-70475.jpg', 'Nice black  casual t-shirt having every size of shirt like this', '', '', '', '', '', '', 'Black T-shirt', 'Nice black  casual t-shirt having every size of shirt like this', 'casual t-shirt, casual t-shirts for men, black t-shirt', 'Yes', 1, NULL, '2021-08-29 07:37:30'),
+(1, 4, 1, 2, 'Black Casual T-shirt', 'Bl-01', 'black', '', '1000', '5', '200', 'SampleVideo_1280x720_1mb.mp4', 'tate-logo-black--tshirt-back-g1086.jpg-70475.jpg', 'Nice black  casual t-shirt having every size of shirt like this', '', '', '', '', '', '', 'Black T-shirt', 'Nice black  casual t-shirt having every size of shirt like this', 'casual t-shirt, casual t-shirts for men, black t-shirt', 'Yes', 1, NULL, '2021-08-29 18:54:52'),
 (2, 4, 1, 1, 'Grey Casual T-shirt', 'Bl-02', 'grey', '', '2000', '20', '220', 'file_example_MP4_480_1_5MG.mp4', 'autism-t-shirt-autism-awareness-seeing-the-world-from-different-angles-cute-tees-gift-shirts-customcat-2518802038873_1024x.jpg-41192.jpg', 'Product Description', 'Hand Wash', 'Wool', 'Printed', 'Full Sleeve', 'Slim', '', '', '', '', 'Yes', 1, NULL, '2021-08-29 07:38:14'),
 (3, 4, 1, 1, 'Black Casual T-shirts', 'Bl-01', 'Black', '', '1000', '20', '200', 'file_example_MP4_480_1_5MG.mp4', '634485-0320.jpg-50968.jpg', 'Product Description', 'Machine Wash', 'Polyester', 'Plain', 'Half Sleeve', 'Regular', '', '', '', '', 'Yes', 1, '2020-12-17 15:01:20', '2021-08-29 07:38:36'),
 (5, 7, 2, 1, 'Pakistani Girls dress', 'PK-1-02', 'silver', '', '3000', '', '700', 'file_example_MP4_480_1_5MG.mp4', 'download.jpg-99298.jpg', '', 'Machine Wash', '', '', '', '', '', '', '', '', 'Yes', 1, '2020-12-17 15:14:55', '2021-08-29 07:39:04'),
@@ -3165,7 +3195,7 @@ INSERT INTO `products` (`id`, `category_id`, `section_id`, `brand_id`, `product_
 (12, 15, 3, 8, 'Boys P-WIRE suitS', 'BPS-2', 'grey', '300', '2000', '5', '300', 'file_example_MP4_480_1_5MG.mp4', '51iGrfuERIL.jpg-26988.jpg', 'This product has the touch of western as well as eastern fashion', 'Washable', 'Wool', 'Plain', 'Half Sleeve', 'Regular', '', 'Boys P-WIRE suitS', 'This product has the touch of western as well as eastern fashion', 'Boys P-WIRE suitS, boys kids dresses, kids dresses', 'Yes', 1, '2021-08-16 17:54:50', '2021-08-29 07:27:47'),
 (13, 14, 3, 8, 'Girls  P-WIRE suitS', 'GPSP-1', 'Maroon', '400', '3000', '2', '400', '', '1620832080263_0..webp-91151.webp', 'Girls  P-WIRE suitS are the best asian dresses having every type of dresses', 'Not washable wash with hankds', 'Polyester', 'Self', 'Half Sleeve', 'Regular', '', 'Girls  P-WIRE suitS', 'Girls  P-WIRE suitS are the best asian dresses having every type of dresses', 'pwire girls kids dresses, kids dresses', 'Yes', 1, '2021-08-16 18:05:35', '2021-08-29 07:45:34'),
 (14, 14, 3, 8, 'Girls  P-WIRE suit', 'GPSG-2', 'violet', '400', '3500', '5', '500', 'SampleVideo_1280x720_1mb.mp4', 'a0c57e6f7c426b0f35dec00f32938225.jpg-30734.jpg', 'Girls  P-WIRE suitS are the best asian dresses having every type of dresses', 'Washable', 'Polyester', 'Self', 'Half Sleeve', 'Slim', '', 'Girls  P-WIRE suit', 'Girls  P-WIRE suitS are the best asian dresses having every type of dresses', 'Girls  P-WIRE suit, kids girls dresses, kids dresses', 'Yes', 1, '2021-08-16 18:08:50', '2021-08-29 07:42:19'),
-(15, 14, 3, 8, 'Girls  P-WIRE dress white light pinkish', 'GPSP-4', 'fuchsia', '400', '3500', '', '700', 'file_example_MP4_480_1_5MG.mp4', 'images.jpg-48361.jpg', 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'wash with hands', 'Polyester', 'Self', 'Half Sleeve', 'Slim', '', 'Girls  P-WIRE dress white light pinkish', 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'Girls  P-WIRE dress white light pinkish, kids girls dress, kids dress', 'No', 1, '2021-08-17 03:02:57', '2021-08-29 07:42:38');
+(15, 14, 3, 8, 'Girls  P-WIRE dress white light pinkish', 'GPSP-4', 'fuchsia', '400', '3500', '', '700', 'file_example_MP4_480_1_5MG.mp4', 'images.jpg-48361.jpg', 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'wash with hands', 'Polyester', 'Self', 'Half Sleeve', 'Slim', '', 'Girls  P-WIRE dress white light pinkish', 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'Girls  P-WIRE dress white light pinkish, kids girls dress, kids dress', 'No', 1, '2021-08-17 03:02:57', '2021-08-29 19:05:01');
 
 -- --------------------------------------------------------
 
@@ -3241,6 +3271,32 @@ INSERT INTO `products_images` (`id`, `product_id`, `image`, `status`, `created_a
 (6, 6, '7191091608557587.jpg', 1, '2020-12-21 08:33:08', '2020-12-21 08:33:28'),
 (7, 6, '9750311608557588.jpg', 1, '2020-12-21 08:33:08', '2020-12-21 08:33:30'),
 (8, 1, '9832901608970063.jpg', 0, '2020-12-26 03:07:43', '2020-12-26 03:07:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE `ratings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `review` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rating` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ratings`
+--
+
+INSERT INTO `ratings` (`id`, `user_id`, `product_id`, `review`, `rating`, `status`, `created_at`, `updated_at`) VALUES
+(1, 4, 1, 'Nice Service', 3, 1, NULL, NULL),
+(2, 4, 2, 'Nice Service', 4, 1, NULL, NULL),
+(3, 4, 3, 'Nice Service', 5, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3640,6 +3696,12 @@ ALTER TABLE `coupons`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `currencies`
+--
+ALTER TABLE `currencies`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `delievery_addresses`
 --
 ALTER TABLE `delievery_addresses`
@@ -3725,6 +3787,12 @@ ALTER TABLE `products_images`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sections`
 --
 ALTER TABLE `sections`
@@ -3757,7 +3825,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admins_roles`
 --
 ALTER TABLE `admins_roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `banners`
@@ -3781,7 +3849,7 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `chat_messages`
@@ -3814,6 +3882,12 @@ ALTER TABLE `coupons`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT for table `currencies`
+--
+ALTER TABLE `currencies`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `delievery_addresses`
 --
 ALTER TABLE `delievery_addresses`
@@ -3835,7 +3909,7 @@ ALTER TABLE `front_settings`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -3890,6 +3964,12 @@ ALTER TABLE `products_attributes`
 --
 ALTER TABLE `products_images`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `ratings`
+--
+ALTER TABLE `ratings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sections`

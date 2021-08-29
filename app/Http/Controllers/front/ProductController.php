@@ -22,6 +22,7 @@ use App\Models\OrdersProduct;
 use App\Models\ShippingCharge;
 use App\Models\OthersSetting;
 use App\Models\Brand;
+use App\Models\Currency;
 use DB;
 use Session;
 use Auth;
@@ -170,10 +171,10 @@ class ProductController extends Controller
     }// function
 
     public function product_detail($id){
-        
         $productDetail=Product::with(['category','brand','attributes'=>function($query){
             $query->where('status',1);
         },'images'])->find($id)->toArray();
+
         // frelated products
         $relatedProducts=Product::where('category_id',$productDetail['category']['id'])->where('id','!=',$id)->limit(4)->inRandomOrder()->get()->toArray();
         //dd($relatedProducts); die();
@@ -184,10 +185,14 @@ class ProductController extends Controller
             $groupProducts=Product::select('id','product_color')->where('id','!=',$id)->where(['group_code'=>$productDetail['group_code'],'status'=>1])->get()->toArray();
             //dd($groupProducts); die;
         }
+        // Currencies
+        $getCurrencies=Currency::select('currency_code','currency_rate')->where('status',1)->get()->toArray();
+        //dd($getCurrencies); die;
+        // Seo
         $meta_title=$productDetail['meta_title'];
         $meta_description=$productDetail['meta_description'];
         $meta_keywords=$productDetail['meta_keywords'];
-        return view('front.products.product_detail')->with(compact('productDetail','total_stock','relatedProducts','groupProducts','meta_title','meta_description','meta_keywords'));
+        return view('front.products.product_detail')->with(compact('productDetail','total_stock','relatedProducts','groupProducts','meta_title','meta_description','meta_keywords','getCurrencies'));
     }
 
     public function get_product_price(Request $request){
@@ -196,6 +201,17 @@ class ProductController extends Controller
             //echo "<pre>"; print_r($data); die;
             //$get_product_price=ProductsAttribute::where(['product_id'=>$data['product_id'],'size'=>$data['size']])->first();
             $get_discountedAttr_price=Product::getDiscountedAttrPrice($data['product_id'],$data['size']);
+            //dd($get_discountedAttr_price['product_price']); die;
+            /// Currencies conversion
+            $getCurrencies=Currency::select('currency_code','currency_rate')->where('status',1)->get()->toArray();
+            $get_discountedAttr_price['currency']="";
+            foreach ($getCurrencies as $currency) {
+                $get_discountedAttr_price['currency'].='<br>';
+                $get_discountedAttr_price['currency'].=$currency['currency_code'];
+                $get_discountedAttr_price['currency'].=' : ';
+                $get_discountedAttr_price['currency'].=round($get_discountedAttr_price['final_price']/$currency['currency_rate'],2);
+
+            }
             
             return $get_discountedAttr_price;
         }

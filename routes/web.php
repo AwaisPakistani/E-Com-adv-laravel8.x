@@ -13,6 +13,7 @@ use App\Http\Controllers\admin\ShippingController;
 use App\Http\Controllers\admin\userController;
 use App\Http\Controllers\admin\CmsController;
 use App\Http\Controllers\admin\frontSettingsController;
+use App\Http\Controllers\admin\CurrencyController;
 
 // Front 
 use App\Http\Controllers\front\IndexController;
@@ -139,6 +140,12 @@ Route::prefix('admin')->namespace('admin')->group(function () {
 
      // Others Settings Cart updation
      Route::match(['get', 'post'], '/update-others-settings', [AdminController::class, 'update_others_settings']);
+
+     // Currencies Routes
+     Route::get('currencies',[CurrencyController::class, 'currencies']);
+     Route::post('/update-currency-status', [CurrencyController::class, 'update_currencies_status']);
+     Route::match(['get', 'post'], '/add-edit-currency/{id?}', [CurrencyController::class, 'add_edit_currency']); 
+      Route::get('/delete-currency/{id}', [CurrencyController::class, 'delete_currency']);
  });
 });
 

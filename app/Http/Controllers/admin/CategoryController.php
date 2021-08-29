@@ -81,17 +81,18 @@ class CategoryController extends Controller
              $rules=[
                 'category_name'=>'required|regex:/^[\pL\s\-]+$/u',
                 'section_id'=>'required',
-                'category_url'=>'required',
-                'category_image'=>'image'
+                'category_url'=>'required'
             ];
             $customMessages=[
              'category_name.required'=>'Name is required',
              'category_name.regex'=>'Valid name is required',
              'section_id.required'=>'Section is required',
-             'category_url.required'=>'URL is required',
-             'category_image.image'=>'Valid image is required'
+             'category_url.required'=>'URL is required'
             ];
         $this->validate($request,$rules,$customMessages);
+            if (empty($data['category_discount'])) {
+                $data['category_discount']='';
+            }
             if (empty($data['category_description'])) {
                 $data['category_description']='';
             }
@@ -111,7 +112,7 @@ class CategoryController extends Controller
             $category->section_id=$data['section_id'];
             $category->category_name=$data['category_name'];
             
-            if ($request->hasFile('category_image')) {
+            /*if ($request->hasFile('category_image')) {
                   
                     $image_tmp=$request->file('category_image');
                     if ($image_tmp->isValid()) {
@@ -124,13 +125,31 @@ class CategoryController extends Controller
                       $imagePath="images/admin/categories/small/".$imageName;
 
                       Image::make($image_tmp)->save($imagePath);
-                    }elseif (!empty($data['current_image'])) {
+                      $category->category_image=$imageName;
+                    }
+                    elseif (!empty($data['current_image'])) {
                         $imageName=$data['current_image'];
                     }else{
                         $imageName="";
                     }
+            }*/
+            if ($request->hasFile('category_image')) {
+               $image_tmp=$request->file('category_image');
+               if ($image_tmp->isValid()) {
+                   $Org_name=$image_tmp->getClientOriginalName();
+                   $ext=$image_tmp->getClientOriginalExtension();
+                   $imageName=$Org_name."-".rand(111,99999).'.'.$ext;
+                   $imagePathSmall="images/admin/categories/small/".$imageName;
+                   $imagePathMedium="images/admin/categories/medium/".$imageName;
+                   $imagePathLarge="images/admin/categories/large/".$imageName;
+
+                   Image::make($image_tmp)->save($imagePathLarge);
+                   Image::make($image_tmp)->resize(600,600)->save($imagePathMedium);
+                   Image::make($image_tmp)->resize(300,300)->save($imagePathSmall);
+                   $category->category_image=$imageName;
+               }
             }
-            $category->category_image=$imageName;
+            //$category->category_image=$imageName;
             $category->category_discount=$data['category_discount'];
             $category->category_description=$data['category_description'];
             $category->category_url=$data['category_url'];
