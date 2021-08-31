@@ -60,20 +60,37 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group">
+                <!-- <div class="form-group">
                   @if(!empty($settings_u->image))
-                  
                   <input type="hidden" name="image" class="custom-file-input" value="{{$settings_u->image}}">
                   <img src="{{asset('images/admin/logo/'.$settings_u->image)}}" width="350px" height="150px"><br><br>
                   <!-- <label class="btn btn-warning">Replace Image 
                   <input type="file" name="image" class="form-control" style="display: none;" value="{{$settings_u->image}}">
                   </label> -->
-                  <a class="btn btn-warning" href="{{url('admin/delete-logo/'.$settings_u->id)}}" onclick="return confirm('Are you sure you want to delete this logo?'">Delete Image</a>
+                  <!-- <a class="btn btn-warning" href="{{url('admin/delete-logo/'.$settings_u->id)}}" onclick="return confirm('Are you sure you want to delete this logo?'">Delete Image</a>
                   @else
                     <label for="exampleInputEmail1">Website Logo</label>
                     <input type="file" class="form-control" name="image" id="image">
                   @endif
-                </div>
+                </div> -->
+                
+
+                <div class="form-group">
+                    <label for="exampleInputFile">Website Logo</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" name="image" class="custom-file-input"  id="image" accept="image/*">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="">Upload</span>
+                      </div>
+                    </div>
+                      @if(!empty($settings_u->image))
+                      <img src="{{asset('images/admin/logo/'.$settings_u->image)}}" width="350px" height="150px">
+                      &nbsp; <br><a href="{{url('admin/delete-logo/'.$settings_u->id)}}" class="btn btn-warning" onclick="return confirm('Are you sure you want to delete this Logo?')">Delete Image</a>  
+                      @endif
+                    </div>
                 <span>Logo size must be same as : width=400px; height=142;</span>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Social</label><br>

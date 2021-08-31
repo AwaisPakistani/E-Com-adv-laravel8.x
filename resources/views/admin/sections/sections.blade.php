@@ -24,6 +24,7 @@
        <div class="card">
             <div class="card-header">
               <h3 class="card-title">Sections</h3>
+              <a href="{{url('admin/add-edit-section')}}" style="max-width: 200px; display: inline-block; float: right;" class="btn btn-block btn-outline-secondary btn-flat"><i class="fas fa-save"></i> Add Section</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -48,7 +49,9 @@
                   <a class="updateSectionStatus" id="section-{{$sec->id}}" section_id="{{ $sec->id }}" href="javascript:void(0);"><i style="font-size: 30px;" class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
                   @endif
                   </td>
-                  <td>Delete | Edit</td>
+                  <td>
+                   <a href="{{url('admin/add-edit-section/'.$sec->id)}}" class="btn btn-success" btn-sm><i class="fas fa-edit"></i></a>
+                  </td>
                   
                 </tr>
                @endforeach

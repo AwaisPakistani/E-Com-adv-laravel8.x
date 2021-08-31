@@ -182,24 +182,22 @@ class AdminController extends Controller
       }
       if ($request->isMethod('post')) {
         $data=$request->all();
+        //echo "<pre>"; print_r($data); die;
         $rules=[
                 'admin_name'=>'required|regex:/^[\pL\s\-]+$/u',
-                'admin_email'=>'required|email',
-                'admin_mobile'=>'required',
-                'admin_image'=>'image'
+                'admin_mobile'=>'required'
+                // 'admin_image'=>'image'
             ];
             $customMessages=[
              'admin_name.required'=>'Admin Name is required',
              'admin_name.regex'=>'Valid Admin Name is required',
-             'admin_email.required'=>'Admin Email is required',
-             'admin_email.email'=>'Valid Email is required',
-             'admin_mobile.required'=>'Admin Mobile is required',
-             'banner_image.image'=>'Valid image is required'
+             'admin_mobile.required'=>'Admin Mobile is required'
+            //  'banner_image.image'=>'Valid image is required'
             ];
         $this->validate($request,$rules,$customMessages);
         //echo "<pre>"; print_r($data); die;
         if ($id=="") {
-          $adminCount=Admin::where('email',$data['admin_email'])->count();
+          $adminCount=Admin::where('email',$data['email'])->count();
           if ($adminCount > 0) {
             Session::flash('error_message','This email already exists');
             return redirect()->back();
@@ -221,7 +219,7 @@ class AdminController extends Controller
         $adminData->name=$data['admin_name'];
         $adminData->type=$data['admin_type'];
         $adminData->mobile=$data['admin_mobile'];
-        $adminData->email=$data['admin_email'];
+        $adminData->email=$data['email'];
         $adminData->password=bcrypt($data['admin_password']);
         $adminData->status=1;
         $adminData->save();

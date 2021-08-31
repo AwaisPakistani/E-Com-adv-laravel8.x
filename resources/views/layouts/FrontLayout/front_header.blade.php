@@ -110,26 +110,19 @@
 							<div class="custom-menu">
 								<div id="shopping-cart">
 									<div class="shopping-cart-list">
+										@foreach($cartItems as $item)
 										<div class="product product-widget">
 											<div class="product-thumb">
-												<img src="{{asset('front/img/thumb-product01.jpg')}}" alt="">
+												<img src="{{asset('images/admin/products/small/'.$item['product']['main_image'])}}" alt="">
 											</div>
 											<div class="product-body">
-												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-												<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+												<h3 class="product-price">{{$cart['product']['product_price']}}<span class="qty">x3</span></h3>
+												<h2 class="product-name"><a href="#">{{$item['product']['product_name']}}</a></h2>
 											</div>
 											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
 										</div>
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="{{asset('front/img/thumb-product01.jpg')}}" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-												<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
+										@endforeach
+										
 									</div>
 									<div class="shopping-cart-btns">
 										<a href="{{url('/cart')}}" class="main-btn">View Cart</a>

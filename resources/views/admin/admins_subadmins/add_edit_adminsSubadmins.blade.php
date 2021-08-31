@@ -99,9 +99,19 @@
               <!-- /.col -->
               <div class="col-md-6">
                  
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="exampleInputEmail1">Admin Email</label>
                     <input type="email" class="form-control" name="admin_email" id="admin_email" @if(!empty($adminData_u->email)) disabled="" @else required="" @endif placeholder="Enter Admin Email" @if(!empty($adminData_u)) value="{{$adminData_u->email}}" @else value="{{old('email')}}" @endif>
+                </div> -->
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Admin Email</label><br>
+                    @if(!empty($adminData_u->email))
+                    <input type="hidden" name="email" value="{{$adminData_u->email}}">
+                    <label style="border: 1px solid black; background-color:blue; color:white; padding:10px;">{{$adminData_u->email}}</label>
+                    @else
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter Admin Email">
+                    @endif
+            
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Admin Password</label>

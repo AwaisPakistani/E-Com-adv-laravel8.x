@@ -63,36 +63,38 @@ $banners=Banner::getBanners();
 			<!-- row -->
 			<div class="row">
 				<!-- banner -->
+				@foreach($sections as $sec)
 				<div class="col-md-4 col-sm-6">
 					<a class="banner banner-1" href="#">
-						<img src="{{asset('front/img/banner10.jpg')}}" alt="">
+						<img src="{{asset('images/admin/sections/medium/'.$sec->image)}}" alt="Section image NO.{{$sec->id}}" width="50%" height="200px">
 						<div class="banner-caption text-center">
-							<h2 class="white-color">NEW COLLECTION</h2>
+							<h2 class="black-color">{{$sec->name}}</h2>
 						</div>
 					</a>
 				</div>
+				@endforeach
 				<!-- /banner -->
 
 				<!-- banner -->
-				<div class="col-md-4 col-sm-6">
+				<!-- <div class="col-md-4 col-sm-6">
 					<a class="banner banner-1" href="#">
 						<img src="{{asset('front/img/banner11.jpg')}}" alt="">
 						<div class="banner-caption text-center">
 							<h2 class="white-color">NEW COLLECTION</h2>
 						</div>
 					</a>
-				</div>
+				</div> -->
 				<!-- /banner -->
 
 				<!-- banner -->
-				<div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
+				<!-- <div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
 					<a class="banner banner-1" href="#">
 						<img src="{{asset('front/img/banner12.jpg')}}" alt="">
 						<div class="banner-caption text-center">
 							<h2 class="white-color">NEW COLLECTION</h2>
 						</div>
 					</a>
-				</div>
+				</div> -->
 				<!-- /banner -->
 
 			</div>

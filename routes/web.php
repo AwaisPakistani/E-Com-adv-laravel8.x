@@ -55,6 +55,9 @@ Route::prefix('admin')->namespace('admin')->group(function () {
      //sections
      Route::get('/sections', [SectionController::class, 'sections']);
      Route::post('/update-section-status', [SectionController::class, 'update_section_status']);
+     Route::match(['get', 'post'], '/add-edit-section/{id?}', [SectionController::class, 'add_edit_section']);
+     Route::get('/delete-section-image/{id}', [SectionController::class, 'delete_section_image']);
+
      //categories
      Route::get('/categories', [CategoryController::class, 'categories']);
      Route::post('/update-category-status', [CategoryController::class, 'update_category_status']);

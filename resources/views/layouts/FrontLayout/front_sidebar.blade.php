@@ -34,7 +34,7 @@ $sections=Section::sections();
 									<div class="col-md-12">
 										<hr>
 										<a class="banner banner-1" href="#">
-											<img src="{{asset('front/img/banner05.jpg')}}" alt="">
+											<img src="{{asset('images/admin/sections/large/'.$section->image)}}" alt="Section Image" width="100%" height="200px">
 											<div class="banner-caption text-center">
 												<h2 class="white-color">NEW COLLECTION(Section Image)</h2>
 												<h3 class="white-color font-weak">HOT DEAL</h3>

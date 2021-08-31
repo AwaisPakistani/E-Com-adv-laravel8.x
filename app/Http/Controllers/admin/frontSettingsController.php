@@ -40,31 +40,41 @@ class frontSettingsController extends Controller
             $data=$request->except('_token');
             //echo "<pre>"; print_r($data); die;
             //dd($data); die;
-            if ($request->hasFile('image')) {
-                  
-                    $image_tmp=$request->file('image');
-                    if ($image_tmp->isValid()) {
+            // if ($request->hasFile('image')) {
+            //         $image_tmp=$request->file('image');
+            //         if ($image_tmp->isValid()) {
                         
-                      $ext=$image_tmp->getClientOriginalExtension();
+            //           $ext=$image_tmp->getClientOriginalExtension();
 
-                      $imageName=rand(111,99999).'.'.$ext;
+            //           $imageName=rand(111,99999).'.'.$ext;
                       
 
-                      $imagePath="images/admin/logo/".$imageName;
+            //           $imagePath="images/admin/logo/".$imageName;
 
-                      Image::make($image_tmp)->resize(600,300)->save($imagePath);
-                    }elseif (!empty($data['current_image'])) {
-                        $imageName=$data['current_image'];
-                    }else{
-                        $imageName="";
-                    }
+            //           Image::make($image_tmp)->resize(600,300)->save($imagePath);
+            //         }elseif (!empty($data['current_image'])) {
+            //             $imageName=$data['current_image'];
+            //         }else{
+            //             $imageName="";
+            //         }
+            // }
+            if($request->hasFile('image')){
+                $image_tmp = $data['image'];
+                if ($image_tmp->isValid()) {
+                    // Upload Images after Resize
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    $fileName = rand(111,99999).'.'.$extension;
+                    $large_image_path = 'images/admin/logo/'.'/'.$fileName;
+                    Image::make($image_tmp)->save($large_image_path);
+                    $settings->image = $fileName; 
+                }
             }
             if ($request->has('social')) {
                 $data['social']=implode(',', $data['social']);
                // print_r($data['social']);
                 //die();
             }
-            $settings->image=$imageName;
+            //$settings->image=$imageName;
             $settings->social=$data['social'];
             $settings->about=$data['about'];
             $settings->save();
