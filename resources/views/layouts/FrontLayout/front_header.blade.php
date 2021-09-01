@@ -20,13 +20,13 @@
 								<li><a href="#">Spanish (Es)</a></li>
 							</ul>
 						</li>
-						<li class="dropdown default-dropdown">
+						<!-- <li class="dropdown default-dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">USD <i class="fa fa-caret-down"></i></a>
 							<ul class="custom-menu">
 								<li><a href="#">USD ($)</a></li>
 								<li><a href="#">EUR (€)</a></li>
 							</ul>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</div>
@@ -110,18 +110,21 @@
 							<div class="custom-menu">
 								<div id="shopping-cart">
 									<div class="shopping-cart-list">
-										@foreach($cartItems as $item)
+										@foreach($usercartItems as $cart)
 										<div class="product product-widget">
 											<div class="product-thumb">
-												<img src="{{asset('images/admin/products/small/'.$item['product']['main_image'])}}" alt="">
+												<img src="{{asset('images/admin/products/small/'.$cart['product']['main_image'])}}" alt="image">
 											</div>
 											<div class="product-body">
-												<h3 class="product-price">{{$cart['product']['product_price']}}<span class="qty">x3</span></h3>
-												<h2 class="product-name"><a href="#">{{$item['product']['product_name']}}</a></h2>
+												<h3 class="product-price">{{$cart['product']['product_price']}}<span class="qty">x{{$cart['quantity']}}</span></h3>
+												<h2 class="product-name"><a href="#">{{$cart['product']['product_name']}}</a></h2>
+												<h2 class="product-name"><a href="#">Size : {{$cart['size']}}</a></h2>
 											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
+											<!-- <button class="cancel-btn"><i class="fa fa-trash"></i></button> -->
 										</div>
 										@endforeach
+										
+										
 										
 									</div>
 									<div class="shopping-cart-btns">

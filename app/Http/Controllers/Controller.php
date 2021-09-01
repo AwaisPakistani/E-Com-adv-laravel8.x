@@ -33,13 +33,13 @@ class Controller extends BaseController
     // Categories
     $categories=section::with('categories')->get();
     $categories=json_decode(json_encode($categories));
-    $cartItems=Cart::userCartItems();
+    $usercartItems=Cart::userCartItems();
      view()->share([
         'pages'=>$pages,
         'setting'=>$settings,
         'icons'=>$icons,
         'categories'=>$categories,
-        'cartItems'=>$cartItems,
+        'usercartItems'=>$usercartItems,
       ]);
    }//
 }

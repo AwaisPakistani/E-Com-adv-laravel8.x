@@ -242,7 +242,7 @@ $(document).ready(function(){
             data:{'cartId':removeCartId},
             type:'post',
             success:function(resp){
-              //alert(resp); return false;
+              //alert(resp.view); return false;
               $('#AppendCartItems').html(resp.view);
             },error:function(){
               alert('error');

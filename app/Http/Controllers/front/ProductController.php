@@ -26,7 +26,6 @@ use App\Models\Currency;
 use DB;
 use Session;
 use Auth;
-
 class ProductController extends Controller
 {
     public function listing(Request $request){
@@ -297,20 +296,21 @@ class ProductController extends Controller
             $cartDetails=Cart::find($data['cartId']);
             $availableStock=ProductsAttribute::select('stock')->where(['product_id'=>$cartDetails['product_id'],'size'=>$cartDetails['size']])->first()->toArray(); 
             if ($data['qty']>$availableStock['stock']) {
+                $usercartItems=Cart::userCartItems();
+                $html_view = view("front.products.cart_items")->with(compact('usercartItems'))->render();
                 return response()->json([
                  'status'=>false,
-                 'message'=>'Product stock is not available',
-                 'view'=>(String)View::make('front.products.cart_items')->with(compact('userCartItems'))
-                ]);
+                 'view'=>$html_view,
+                 'message'=>'Requested quantity is not available']);
             }
             $availableSize=ProductsAttribute::where(['product_id'=>$cartDetails['product_id'],'size'=>$cartDetails['size'],'status'=>1])->count();
             if ($availableSize==0) {
-                 return Response::json(array(view('front.products.cart_items')->with(compact('userCartItems'))));
-                //return response()->json([
-                // 'status'=>false,
-                // 'message'=>'Product size is not available',
-                // 'view'=>(String)View::make('front.products.cart_items')->with(compact('userCartItems'))
-                //]);
+                $usercartItems=Cart::userCartItems();
+                $html_view = view("front.products.cart_items")->with(compact('usercartItems'))->render();
+                return response()->json([
+                 'status'=>false,
+                 'view'=>$html_view,
+                 'message'=>'Requested quantity is not available']);
             }
             //echo $availableStock['stock']; die();
             //echo "<pre>"; print_r($data); die();
@@ -323,10 +323,12 @@ class ProductController extends Controller
             }
             //return redirect()->back();
             //echo "<pre>"; print_r($usercartItems); die();
+            $usercartItems=Cart::userCartItems();
+            //$html_view = view("front.products.cart_items")->with(compact('usercartItems'))->render();
             return response()->json([
-                 'status'=>true,
-                 'view'=>(String)View::make('front.products.cart')->with(compact('userCartItems'))
-             ]);
+             'status'=>true,
+             'view'=>(String)View::make("front.products.cart_items")->with(compact('usercartItems'))]);
+             //'view'=>$html_view]);
            // $response->assertJsonPath('front.products.cart', 'userCartItems'); 
                       
         }
@@ -335,18 +337,21 @@ class ProductController extends Controller
     public function delete_cart_item(Request $request){
       if ($request->ajax()) {
           $data=$request->all();
+          
           //echo "<pre>"; print_r($data); die();
+          
           Cart::where('id',$data['cartId'])->delete();
           // For coupon Apply
             if (Session::has('couponAmount')) {
             Session::forget('couponAmount');
             }
-          $userCartItems=Cart::userCartItems();
-          /*return Response::json(array(view('front.products.cart')->with(compact('userCartItems'))));*/
-         // return Response::json(array('view' => View::make('front.products.cart',array('userCartItems'=>$StruserCartItems))->render()));
-          return response()->json([
-           'status'=>true,
-           'view'=>(String)View::make('front.products.cart_items')->with(compact('userCartItems'))]);
+        
+          
+            $usercartItems=Cart::userCartItems();
+            $html_view = view("front.products.cart_items")->with(compact('usercartItems'))->render();
+            return response()->json([
+             'status'=>true,
+             'view'=>$html_view]);
            // ]);
       }
     }//
