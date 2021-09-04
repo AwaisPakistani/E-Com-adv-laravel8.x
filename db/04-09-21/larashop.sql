@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2021 at 07:15 PM
+-- Generation Time: Sep 04, 2021 at 03:37 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -48,9 +48,46 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `type`, `mobile`, `email`, `email_verified_at`, `password`, `image`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Mason', 'Admin', '+109309409430', 'admin@gmail.com', NULL, '$2y$10$UiurG0zL18dbzmb54PFMzO1Wk86vUlmPCFshM6DpQF/oN6NacQpIC', '67538.jpg', 1, NULL, NULL, '2020-12-14 04:01:10'),
-(2, 'sub admin', 'sub admin', '030499994949', 'subadmin@gmail.com', NULL, '$2y$10$6wnaltn72tnEBmvvUIRGbOVGwZPKRUVNUm1aWOG0g7BcoBzo7Wrbq', '3.jpg', 1, NULL, NULL, NULL),
-(3, 'editor', 'editor', '030499994949', 'editr@gmail.com', NULL, '$2y$10$6wnaltn72tnEBmvvUIRGbOVGwZPKRUVNUm1aWOG0g7BcoBzo7Wrbq', '5.jpg', 1, NULL, NULL, NULL);
+(1, 'Mason', 'superadmin', '+109309409430', 'superadmin@gmail.com', NULL, '$2y$10$UiurG0zL18dbzmb54PFMzO1Wk86vUlmPCFshM6DpQF/oN6NacQpIC', '67538.jpg', 1, NULL, NULL, '2020-12-14 04:01:10'),
+(5, 'Shifa Memon', 'admin', '03004444447', 'admin@gmail.com', NULL, '$2y$10$blP1ft5D41bHp9Osa9t1BOvOQcm5vbU49ooOiHX0uj0nRpeKOgCrW', 'FB_IMG_15947558435747590.jpg-7055.jpg', 1, NULL, '2021-08-28 03:14:52', '2021-08-31 17:36:52'),
+(6, 'Faiza', 'subadmin', '03004446661', 'faiza@gmail.com', NULL, '$2y$10$/geqR3xKt.kTRV2RoytJ3.UNXsIJZbZxfrxyWQddrrWsuhtX08Qya', 'IMG_20200805_120353.png-3817.png', 1, NULL, '2021-08-28 03:19:15', '2021-08-28 04:24:30'),
+(8, 'Faiza Madam', 'subadmin', '03004446666', 'faizaadmin@gmail.com', NULL, '$2y$10$dVFow2u5Lzqv6y2cAmqwFOtEGJKMLvi5Bk4tBG1FU8o82OteaU8fW', 'IMG_20200804_235130.png-16149.png', 1, NULL, '2021-08-28 04:35:49', '2021-08-28 04:43:39'),
+(9, 'Summaiya', 'subadmin', '03175055443', 'summaiya@gmail.com', NULL, '$2y$10$8U24W77Op1VFBU53YhuIn.KSebjl8yqvfbxN8R2RzMsodqPUTq/jK', 'Screenshot_2019-08-13-13-43-54.png-1332.png', 1, NULL, '2021-08-31 17:34:07', '2021-08-31 17:34:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admins_roles`
+--
+
+CREATE TABLE `admins_roles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  `module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `view_access` tinyint(4) NOT NULL,
+  `edit_access` tinyint(4) NOT NULL,
+  `full_access` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `admins_roles`
+--
+
+INSERT INTO `admins_roles` (`id`, `admin_id`, `module`, `view_access`, `edit_access`, `full_access`, `created_at`, `updated_at`) VALUES
+(13, 6, 'categories', 1, 0, 0, NULL, NULL),
+(14, 6, 'products', 0, 1, 0, NULL, NULL),
+(15, 6, 'coupons', 1, 0, 1, NULL, NULL),
+(16, 6, 'orders', 0, 1, 0, NULL, NULL),
+(68, 5, 'categories', 0, 0, 1, NULL, NULL),
+(69, 5, 'products', 0, 1, 1, NULL, NULL),
+(70, 5, 'coupons', 0, 0, 1, NULL, NULL),
+(71, 5, 'orders', 0, 0, 1, NULL, NULL),
+(72, 9, 'categories', 1, 0, 0, NULL, NULL),
+(73, 9, 'products', 1, 0, 0, NULL, NULL),
+(74, 9, 'coupons', 1, 0, 0, NULL, NULL),
+(75, 9, 'orders', 1, 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -74,9 +111,9 @@ CREATE TABLE `banners` (
 --
 
 INSERT INTO `banners` (`id`, `image`, `link`, `title`, `alt`, `status`, `created_at`, `updated_at`) VALUES
-(3, 'ecology-concept-environmental-banner-design-260nw-1392526472.webp-64156.webp', 'bags', 'Bags Sale', 'Bags', 0, NULL, '2021-08-08 03:33:33'),
+(3, 'ecology-concept-environmental-banner-design-260nw-1392526472.webp-64156.webp', 'bags', 'Bags Sale', 'Bag', 0, NULL, '2021-08-31 04:01:12'),
 (5, 'esg-modernization-environmental-social-governance-260nw-1938605320.webp-60011.webp', 'ban1', 'Banner', 'banner', 1, '2021-08-08 03:16:56', '2021-08-08 03:18:46'),
-(6, 'abstract-concept-green-color-interconnected-sustainability-icons-recycling-healthy-food-alternative-energy-environmental-156260857.jpg-94303.jpg', 'subbanner', 'subbanner', 'subbanner', 0, '2021-08-08 03:17:47', '2021-08-08 03:20:31'),
+(6, 'abstract-concept-green-color-interconnected-sustainability-icons-recycling-healthy-food-alternative-energy-environmental-156260857.jpg-94303.jpg', 'subbanner', 'subbanner', 'subbanners', 1, '2021-08-08 03:17:47', '2021-08-31 16:21:20'),
 (7, 'banner-mockup-image-brown-paper-260nw-1886361136.webp-27942.webp', 'banner', 'Banner', 'banner', 1, '2021-08-08 03:20:23', '2021-08-08 03:20:23');
 
 -- --------------------------------------------------------
@@ -98,7 +135,7 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Gul Ahme', 1, '2020-12-21 11:06:10', '2020-12-21 12:16:28'),
+(1, 'Gul Ahmed', 1, '2020-12-21 11:06:10', '2021-08-29 06:24:25'),
 (2, 'J Dot', 1, '2020-12-21 11:06:28', '2020-12-21 12:19:41'),
 (8, 'P-WIRE', 1, '2020-12-21 12:32:55', '2020-12-21 12:32:55'),
 (9, 'Nike', 0, '2020-12-21 12:33:12', '2020-12-21 12:56:05');
@@ -130,7 +167,9 @@ INSERT INTO `carts` (`id`, `session_id`, `user_id`, `product_id`, `size`, `quant
 (6, 'yvvrnnM4LWZL1gaeXuvL9sGnFW3OLJ1iZ6DFeyw5', 0, 1, 'S', 7, '2021-01-05 06:18:09', '2021-01-05 07:41:05'),
 (16, 'vMPIQcYyJfA83sCwKgR2kDL8U1ZCRNrZxzhGXjDe', 0, 6, 'S', 2, '2021-07-31 22:57:34', '2021-07-31 22:57:34'),
 (17, '0uHwE6QDuFQjhBDct4A6J0tIxqW6AI8deHGs09k1', 0, 6, 'S', 2, '2021-07-31 23:00:28', '2021-07-31 23:00:28'),
-(89, 'eXjUFtcYUA8rPGJtomgXMqR3nqKY052jtZ9sU40v', 5, 1, 'M', 1, '2021-08-15 20:48:16', '2021-08-15 21:52:49');
+(89, 'eXjUFtcYUA8rPGJtomgXMqR3nqKY052jtZ9sU40v', 5, 1, 'M', 1, '2021-08-15 20:48:16', '2021-08-15 21:52:49'),
+(93, 'IyTcJW6sxymmwtbmgAyQzpS5j5zZs1qW9fz2pTJj', 0, 12, 'S', 1, '2021-08-18 15:59:13', '2021-08-18 16:05:35'),
+(111, 'BcceJ86ptLR53s8nXu9WEVg6JaRaU6VHZLu6TCv3', 0, 1, 'M', 7, '2021-09-01 21:30:20', '2021-09-01 21:54:54');
 
 -- --------------------------------------------------------
 
@@ -162,15 +201,18 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `parent_id`, `section_id`, `category_name`, `category_image`, `category_discount`, `category_description`, `category_url`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`) VALUES
 (2, 0, 1, 'T-shirts', '67508.jpg', 800.00, '', 't-shirts', '', '', '', 1, '2020-12-15 08:08:44', '2021-08-15 20:50:40'),
 (3, 0, 2, 'Tops', '7357.jpg', 80.00, '', 'tops', '', '', '', 1, '2020-12-15 10:15:31', '2020-12-15 10:15:31'),
-(4, 2, 1, 'Casual T-shirts', '14014.jpg', 5.00, 'Casual T-shirts', 'casual-t-shirts', 'Casual T-shirts', 'Casual T-shirts', 'Casual T-shirts', 0, '2020-12-15 11:55:47', '2021-08-15 20:50:42'),
+(4, 2, 1, 'Casual T-shirts', '14014.jpg', 5.00, 'Casual T-shirts', 'casual-t-shirts', 'Casual T-shirts', 'Casual T-shirts', 'Casual T-shirts', 1, '2020-12-15 11:55:47', '2021-08-23 02:47:04'),
 (5, 2, 1, 'Formal T-shirts', '29945.jpg', 1000.00, 'Category Description', 'formal-t-shirts', 'formal T=shirts', 'formal T=shirts', 'formal T=shirts', 1, '2020-12-16 11:54:44', '2020-12-16 11:54:44'),
 (7, 3, 2, 'Denims', '62391.jpg', 0.00, 'Category Description', 'denims', 'Meta  title', 'Category Description', 'Meta keywords', 1, '2020-12-17 12:34:02', '2020-12-26 14:28:35'),
-(8, 0, 3, 'Denims', '49147.jpg', 800.00, 'Category Description', 'denims', 'Meta title', 'Meta Description', 'Meta keywords', 1, '2020-12-17 12:35:16', '2020-12-22 06:34:33'),
+(8, 0, 3, 'Boys Dresses', '72950.jpeg', 800.00, 'Category Description', 'boys-dresses', 'Meta title', 'Category Description', 'Meta keywords', 1, '2020-12-17 12:35:16', '2021-08-16 17:42:56'),
 (9, 0, 1, 'Shirts', '2569.webp', 80.00, 'Category Description', 'shirts', 'meta title', 'Meta Description', 'meta keywords', 1, '2020-12-22 05:33:41', '2020-12-22 06:33:21'),
 (10, 9, 1, 'Formal Shirts', '77810.jpg', 80.00, 'Category Description', 'formal-shirts', 'meta title', 'meta Description', 'meta keywords', 1, '2020-12-22 05:36:18', '2020-12-22 05:36:18'),
 (11, 0, 2, 'Casual Suits', '84765.jpg', 80.00, 'Category Description', 'casual-suits', 'meta title', 'meta Description', 'meta keywords', 1, '2020-12-22 06:48:10', '2020-12-22 06:48:10'),
 (12, 0, 2, 'Formal Suits', '36336.jpg', 80.00, 'Category Description', 'formal-suits', 'meta title', 'meta Description', 'meta keywords', 1, '2020-12-22 06:49:36', '2020-12-22 06:49:36'),
-(13, 0, 3, 'Girl Suits', '59168.jpg', 80.00, 'Category Description', 'girl-suit', 'meta title', 'meta Description', 'meta keywords', 1, '2020-12-22 06:51:21', '2020-12-22 06:51:37');
+(13, 0, 3, 'Girls dresses', '41300.jpg', 15.00, 'Category Description', 'girl-suit', 'meta title', 'Category Description', 'meta keywords', 1, '2020-12-22 06:51:21', '2021-08-16 17:38:59'),
+(14, 13, 3, 'Casual', '31619.jpg', 5.00, 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'casual-girls-kids', 'casual girls kids', 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'kids girls dresses, kids dresses', 1, '2021-08-16 18:18:07', '2021-08-16 18:18:07'),
+(15, 8, 3, 'Casual', '86399.jpg', 5.00, 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'casual-boys-kids', 'casual boys kids', 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'boys kids dresses, boys dresses, kidss dresses', 1, '2021-08-16 18:20:49', '2021-08-16 18:20:49'),
+(16, 0, 2, 'Nighties', '65430.jpg-10517.jpg', 0.00, 'nighties', 'nighties', 'Nighties', 'nighties', 'Girls dresses, girls nighties, nighty', 1, '2021-08-29 19:14:04', '2021-08-29 19:47:20');
 
 -- --------------------------------------------------------
 
@@ -186,6 +228,35 @@ CREATE TABLE `chat_messages` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cms_pages`
+--
+
+CREATE TABLE `cms_pages` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_keywords` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cms_pages`
+--
+
+INSERT INTO `cms_pages` (`id`, `title`, `description`, `url`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'About Us', 'About Use Page Description', 'about-us', 'About Us', 'About Us meta description', 'about us,about e-commerce', 1, NULL, '2021-08-17 16:48:23'),
+(2, 'Privacy Policy', 'Privacy Policy description', 'privacy-policy', 'Privacy Policy', 'Privacy Policy meta description', 'privacy policy,privacy policy of e-commerce', 1, NULL, '2021-08-17 07:53:16'),
+(3, 'Disclaimer Page', 'disclaimer description Page', 'disclaimer-page', 'Disclaimer Page', 'Disclaimer Meta Descriptionc Page', 'disclaimer cms page, cms page', 1, '2021-08-17 08:55:41', '2021-08-17 09:00:43'),
+(5, 'Terms and Conditons', '<h3><b>Terms and Conditions</b></h3><p>Terms and conditions are available in our blog visit my blog--&gt;</p><p><a href=\"https://pkwirenews.blogspot.com/\" target=\"_blank\">Blog</a>&nbsp; &nbsp;Bog</p><p></p>', 'terms-and-conditions', '', '', '', 1, '2021-08-17 17:17:47', '2021-08-17 17:27:11');
 
 -- --------------------------------------------------------
 
@@ -1494,7 +1565,7 @@ CREATE TABLE `coupons` (
 
 INSERT INTO `coupons` (`id`, `coupon_option`, `coupon_code`, `categories`, `users`, `coupon_type`, `amount_type`, `amount`, `expiry_date`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'Manual', 'test10', '2,3', 'dummy@gmailc.om,faiza@gmail.com', 'single', 'Percentage', 10.00, '2021-12-31', 1, NULL, '2021-01-08 12:06:59'),
-(2, 'Automatic', '9517608', '2,9', 'dummy@gmail.com', 'Multiple Times', 'Percentage', 87.00, '2021-07-29', 1, '2021-07-29 20:58:37', '2021-07-31 03:32:57'),
+(2, 'Automatic', '9517608', '2,9', 'dummy@gmail.com', 'Multiple Times', 'Percentage', 87.00, '2021-07-29', 1, '2021-07-29 20:58:37', '2021-08-27 03:10:16'),
 (3, 'Manual', 'RE23322', '4,5,3,7', 'dummy@gmail.com', 'Single Time', 'Fixed', 300.00, '2022-07-29', 1, '2021-07-29 21:02:46', '2021-08-02 18:55:19'),
 (4, 'Automatic', '720034', '2,4', 'dummy@gmail.com', 'Multiple Times', 'Percentage', 5.00, '2022-08-05', 1, '2021-07-29 21:07:42', '2021-07-31 04:09:35'),
 (6, 'Automatic', '895086', '2,4', 'developer@gmail.com', 'Multiple Times', 'Fixed', 342345.00, '2022-03-03', 1, '2021-07-29 21:10:52', '2021-07-29 21:10:52'),
@@ -1504,6 +1575,32 @@ INSERT INTO `coupons` (`id`, `coupon_option`, `coupon_code`, `categories`, `user
 (10, 'Manual', 'Co43332', '2,10', 'dummy@gmail.com,developer@gmail.com', 'Single Time', 'Percentage', 50.00, '2022-05-04', 1, '2021-07-30 04:29:29', '2021-07-30 04:29:29'),
 (11, 'Manual', 'CO-3445', '2,4,5,9,3,7', 'dummy@gmail.com', 'Multiple Times', 'Percentage', 25.00, '2021-10-05', 1, '2021-08-05 21:09:07', '2021-08-07 08:57:37'),
 (12, 'Manual', 'CO-4444', '4,7', 'dummy@gmail.com,developer@gmail.com', 'Single Time', 'Fixed', 100.00, '2021-08-25', 1, '2021-08-05 21:44:06', '2021-08-05 21:48:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `currencies`
+--
+
+CREATE TABLE `currencies` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `currency_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_rate` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `currencies`
+--
+
+INSERT INTO `currencies` (`id`, `currency_code`, `currency_rate`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'SD', '40', 1, NULL, NULL),
+(2, 'GBP', '224', 1, NULL, NULL),
+(3, 'EUR', '190', 1, NULL, NULL),
+(4, 'YEN', '50', 1, NULL, NULL),
+(5, 'USD', '150', 1, NULL, '2021-08-30 16:08:22');
 
 -- --------------------------------------------------------
 
@@ -1556,6 +1653,28 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `front_settings`
+--
+
+CREATE TABLE `front_settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `social` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `about` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `front_settings`
+--
+
+INSERT INTO `front_settings` (`id`, `image`, `social`, `about`, `created_at`, `updated_at`) VALUES
+(1, '9484.png', 'https://www.facebook.com/wnc,https://www.twitter.com/wnc,https://www.instagram.com/wnc,https://www.linkedin.com/wnc,https://www.reddit.com/wnc', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.', '2021-08-19 04:35:42', '2021-09-01 00:45:49');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -1596,7 +1715,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2021_08_05_163648_create_shipping_charges_table', 21),
 (25, '2021_08_06_222043_drop_column_from_shipping_charges_table', 22),
 (26, '2021_08_06_223036_drop_column_from_shipping_charges_table', 23),
-(30, '2021_08_06_223658_add_columns_to_shipping_charges_table', 24);
+(30, '2021_08_06_223658_add_columns_to_shipping_charges_table', 24),
+(31, '2021_08_16_234846_create_cms_pages_table', 25),
+(32, '2021_08_18_125142_create_front__settings_table', 26),
+(33, '2021_08_18_131010_create_front_settings_table', 27),
+(34, '2021_08_27_221455_create_admins_roles_table', 28),
+(35, '2021_08_28_212412_create_others_settings_table', 29),
+(36, '2021_08_29_084536_create_currencies_table', 30),
+(37, '2021_08_29_130503_create_ratings_table', 31);
 
 -- --------------------------------------------------------
 
@@ -1705,7 +1831,8 @@ INSERT INTO `orders` (`id`, `user_id`, `name`, `address`, `city`, `state`, `coun
 (74, 5, 'Developer', 'Street#55, Houston Texas United Stattes', 'Houston', 'Texas', 'United States', '770000', '00123457654', 'developer@gmail.com', 400.00, NULL, NULL, 'New', 'COD', 'COD', 4485.00, '', '', '2021-08-09 20:46:36', '2021-08-09 20:46:36'),
 (75, 4, 'Awais', 'Muhammadi Town Sohan Islamabad', 'islambad', 'Islambad', 'Pakistan', '46000', '03045097559', 'dummy@gmail.com', 200.00, NULL, NULL, 'New', 'COD', 'COD', 3310.00, '', '', '2021-08-15 19:07:21', '2021-08-15 19:07:21'),
 (76, 4, 'test', 'test city test state of test country', 'testing', 'testi state', 'Azerbaijan', '50550', '99999999999', 'dummy@gmail.com', 0.00, NULL, NULL, 'New', 'COD', 'COD', 1200.00, '', '', '2021-08-15 20:13:09', '2021-08-15 20:13:09'),
-(77, 4, 'test', 'test city test state of test country', 'testing', 'testi state', 'Azerbaijan', '50550', '99999999999', 'dummy@gmail.com', 0.00, NULL, NULL, 'New', 'COD', 'COD', 2400.00, '', '', '2021-08-15 20:38:15', '2021-08-15 20:38:15');
+(77, 4, 'test', 'test city test state of test country', 'testing', 'testi state', 'Azerbaijan', '50550', '99999999999', 'dummy@gmail.com', 0.00, NULL, NULL, 'New', 'COD', 'COD', 2400.00, '', '', '2021-08-15 20:38:15', '2021-08-15 20:38:15'),
+(78, 4, 'Awais', 'Muhammadi Town Sohan Islamabad', 'islambad', 'Islambad', 'Pakistan', '46000', '03045097559', 'dummy@gmail.com', 300.00, NULL, NULL, 'In Process', 'COD', 'COD', 6950.00, '', '', '2021-08-17 04:21:18', '2021-08-18 04:25:23');
 
 -- --------------------------------------------------------
 
@@ -1733,7 +1860,8 @@ INSERT INTO `orders_logs` (`id`, `order_id`, `order_status`, `created_at`, `upda
 (5, 3, 'Shipped', '2021-08-05 02:48:31', '2021-08-05 02:48:31'),
 (6, 5, 'Pending', '2021-08-05 03:02:47', '2021-08-05 03:02:47'),
 (7, 5, 'Shipped', '2021-08-05 03:03:25', '2021-08-05 03:03:25'),
-(8, 57, 'Shipped', '2021-08-07 04:52:39', '2021-08-07 04:52:39');
+(8, 57, 'Shipped', '2021-08-07 04:52:39', '2021-08-07 04:52:39'),
+(9, 78, 'In Process', '2021-08-18 04:25:27', '2021-08-18 04:25:27');
 
 -- --------------------------------------------------------
 
@@ -1806,7 +1934,8 @@ INSERT INTO `orders_products` (`id`, `order_id`, `user_id`, `product_id`, `produ
 (47, 75, 4, 1, 'Bl-01', 'Black Casual T-shirt', 'black', 'M', 1235.00, 2, '2021-08-15 19:07:21', '2021-08-15 19:07:21'),
 (48, 75, 4, 3, 'Bl-01', 'Black Casual T-shirts', 'Black', 'L', 640.00, 1, '2021-08-15 19:07:21', '2021-08-15 19:07:21'),
 (49, 76, 4, 2, 'Bl-02', 'Grey Casual T-shirt', 'grey', 'M', 1200.00, 1, '2021-08-15 20:13:09', '2021-08-15 20:13:09'),
-(50, 77, 4, 2, 'Bl-02', 'Grey Casual T-shirt', 'grey', 'M', 1200.00, 2, '2021-08-15 20:38:15', '2021-08-15 20:38:15');
+(50, 77, 4, 2, 'Bl-02', 'Grey Casual T-shirt', 'grey', 'M', 1200.00, 2, '2021-08-15 20:38:15', '2021-08-15 20:38:15'),
+(51, 78, 4, 15, 'GPSP-4', 'Girls  P-WIRE dress white light pinkish', 'fuchsia', 'S', 3325.00, 2, '2021-08-17 04:21:18', '2021-08-17 04:21:18');
 
 -- --------------------------------------------------------
 
@@ -1835,6 +1964,27 @@ INSERT INTO `order_statuses` (`id`, `name`, `status`, `created_at`, `updated_at`
 (6, 'Paid', 1, NULL, NULL),
 (7, 'Shipped', 1, NULL, NULL),
 (8, 'Delievered', 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `others_settings`
+--
+
+CREATE TABLE `others_settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `min_cart_value` int(11) NOT NULL,
+  `max_cart_value` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `others_settings`
+--
+
+INSERT INTO `others_settings` (`id`, `min_cart_value`, `max_cart_value`, `created_at`, `updated_at`) VALUES
+(1, 1500, 150000, NULL, '2021-08-29 05:35:15');
 
 -- --------------------------------------------------------
 
@@ -3011,6 +3161,7 @@ CREATE TABLE `products` (
   `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `group_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_discount` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_weight` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -3036,14 +3187,19 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `section_id`, `brand_id`, `product_name`, `product_code`, `product_color`, `product_price`, `product_discount`, `product_weight`, `product_video`, `main_image`, `description`, `wash_care`, `fabric`, `pattern`, `sleeve`, `fit`, `occassion`, `meta_title`, `meta_description`, `meta_keywords`, `is_featured`, `status`, `created_at`, `updated_at`) VALUES
-(1, 4, 1, 2, 'Black Casual T-shirt', 'Bl-01', 'black', '1000', '', '200', '', 'tate-logo-black--tshirt-back-g1086.jpg-70475.jpg', '', '', '', '', '', '', '', '', '', '', 'Yes', 1, NULL, '2021-08-15 18:26:23'),
-(2, 4, 1, 1, 'Grey Casual T-shirt', 'Bl-02', 'grey', '2000', '20', '220', '', 'autism-t-shirt-autism-awareness-seeing-the-world-from-different-angles-cute-tees-gift-shirts-customcat-2518802038873_1024x.jpg-41192.jpg', 'Product Description', 'Hand Wash', 'Wool', 'Printed', 'Full Sleeve', 'Slim', '', '', '', '', 'Yes', 1, NULL, '2021-08-15 19:16:32'),
-(3, 4, 1, 1, 'Black Casual T-shirts', 'Bl-01', 'Black', '1000', '20', '200', '', '634485-0320.jpg-50968.jpg', 'Product Description', 'Machine Wash', 'Polyester', 'Plain', 'Half Sleeve', 'Regular', '', '', '', '', 'Yes', 1, '2020-12-17 15:01:20', '2020-12-26 03:08:24'),
-(5, 7, 2, 1, 'Pakistani Girls dress', 'PK-1-02', 'silver', '3000', '', '700', 'SampleVideo_640x360_1mb.mp4-14547023.mp4', 'download.jpg-99298.jpg', '', 'Machine Wash', '', '', '', '', '', '', '', '', 'Yes', 1, '2020-12-17 15:14:55', '2021-08-07 06:44:19'),
-(6, 4, 1, 2, 'White T-shirt', 'WH-02', 'white', '1000', '30', '300', '', 'f0trevor_f_White.jpg-39138.jpg', 'Beautiful slim white shirt', 'Machine Wash', 'Wool', 'Printed', 'Half Sleeve', 'Slim', '', '', '', '', 'Yes', 0, '2020-12-17 15:58:41', '2021-08-15 19:11:44'),
-(7, 4, 1, 2, 'White T-shirt Printed', 'Wh-011', 'white', '3000', '5', '200', 'file_example_MP4_480_1_5MG.mp4-555802569.mp4', 'Winging-Life-Winging-It-Care-Free-Attitude-Nonchalant-Shirt.jpg-59836.jpg', 'Product Description', 'Machine Wash', 'Polyester', 'Printed', 'Half Sleeve', 'Regular', '', 'Printed Casual T-shirts', 'Meta Description', 'Meta Keywords', 'Yes', 1, '2020-12-17 16:18:26', '2021-08-15 18:57:16'),
-(8, 5, 1, 1, 'Grey T-shirt', 'Gr-01', 'grey', '2000', '15', '200', '', 'images (1).jpg-78151.jpg', 'Description', 'Machine Wash', 'Polyester', 'Checked', 'Half Sleeve', 'Slim', '', 'title', 'Description', 'keywords', 'Yes', 1, '2020-12-17 17:56:45', '2020-12-26 03:13:08');
+INSERT INTO `products` (`id`, `category_id`, `section_id`, `brand_id`, `product_name`, `product_code`, `product_color`, `group_code`, `product_price`, `product_discount`, `product_weight`, `product_video`, `main_image`, `description`, `wash_care`, `fabric`, `pattern`, `sleeve`, `fit`, `occassion`, `meta_title`, `meta_description`, `meta_keywords`, `is_featured`, `status`, `created_at`, `updated_at`) VALUES
+(1, 4, 1, 2, 'Black Casual T-shirt', 'Bl-01', 'black', '', '1000', '5', '200', 'SampleVideo_1280x720_1mb.mp4', 'tate-logo-black--tshirt-back-g1086.jpg-70475.jpg', 'Nice black  casual t-shirt having every size of shirt like this', '', '', '', '', '', '', 'Black T-shirt', 'Nice black  casual t-shirt having every size of shirt like this', 'casual t-shirt, casual t-shirts for men, black t-shirt', 'Yes', 1, NULL, '2021-08-29 18:54:52'),
+(2, 4, 1, 1, 'Grey Casual T-shirt', 'Bl-02', 'grey', '', '2000', '20', '220', 'file_example_MP4_480_1_5MG.mp4', 'autism-t-shirt-autism-awareness-seeing-the-world-from-different-angles-cute-tees-gift-shirts-customcat-2518802038873_1024x.jpg-41192.jpg', 'Product Description', 'Hand Wash', 'Wool', 'Printed', 'Full Sleeve', 'Slim', '', '', '', '', 'Yes', 1, NULL, '2021-08-29 07:38:14'),
+(3, 4, 1, 1, 'Black Casual T-shirts', 'Bl-01', 'Black', '', '1000', '20', '200', 'file_example_MP4_480_1_5MG.mp4', '634485-0320.jpg-50968.jpg', 'Product Description', 'Machine Wash', 'Polyester', 'Plain', 'Half Sleeve', 'Regular', '', '', '', '', 'Yes', 1, '2020-12-17 15:01:20', '2021-08-29 07:38:36'),
+(5, 7, 2, 1, 'Pakistani Girls dress', 'PK-1-02', 'silver', '', '3000', '', '700', 'file_example_MP4_480_1_5MG.mp4', 'download.jpg-99298.jpg', '', 'Machine Wash', '', '', '', '', '', '', '', '', 'Yes', 1, '2020-12-17 15:14:55', '2021-08-29 07:39:04'),
+(6, 4, 1, 2, 'White T-shirt', 'WH-02', 'white', '', '1000', '30', '300', '', '', 'Beautiful slim white shirt', 'Machine Wash', 'Wool', 'Printed', 'Half Sleeve', 'Slim', '', '', '', '', 'Yes', 0, '2020-12-17 15:58:41', '2021-08-28 03:53:36'),
+(7, 4, 1, 2, 'White T-shirt Printed', 'Wh-011', 'white', '', '3000', '5', '200', 'file_example_MP4_480_1_5MG.mp4', 'Winging-Life-Winging-It-Care-Free-Attitude-Nonchalant-Shirt.jpg-59836.jpg', 'Product Description', 'Machine Wash', 'Polyester', 'Printed', 'Half Sleeve', 'Regular', '', 'Printed Casual T-shirts', 'Meta Description', 'Meta Keywords', 'Yes', 1, '2020-12-17 16:18:26', '2021-08-29 07:39:41'),
+(8, 5, 1, 1, 'Grey T-shirt', 'Gr-01', 'grey', '', '2000', '15', '200', 'file_example_MP4_480_1_5MG.mp4', 'images (1).jpg-78151.jpg', 'Description', 'Machine Wash', 'Polyester', 'Checked', 'Half Sleeve', 'Slim', '', 'title', 'Description', 'keywords', 'Yes', 1, '2020-12-17 17:56:45', '2021-08-29 07:40:02'),
+(11, 15, 3, 8, 'Boys p-wire suit', 'BPS-1', 'black', '300', '2000', '5', '300', 'file_example_MP4_480_1_5MG.mp4', '41LnBeSrN2S.jpg-42441.jpg', 'This product has the touch of western as well as eastern fashion', 'Washable', 'Wool', 'Plain', 'Half Sleeve', 'Regular', '', 'P-wire kids Boys dress', 'This product has the touch of western as well as eastern fashion', 'kids dresses, kids boys dresses, kids dresses', 'Yes', 1, '2021-08-16 17:51:44', '2021-08-29 07:41:32'),
+(12, 15, 3, 8, 'Boys P-WIRE suitS', 'BPS-2', 'grey', '300', '2000', '5', '300', 'file_example_MP4_480_1_5MG.mp4', '51iGrfuERIL.jpg-26988.jpg', 'This product has the touch of western as well as eastern fashion', 'Washable', 'Wool', 'Plain', 'Half Sleeve', 'Regular', '', 'Boys P-WIRE suitS', 'This product has the touch of western as well as eastern fashion', 'Boys P-WIRE suitS, boys kids dresses, kids dresses', 'Yes', 1, '2021-08-16 17:54:50', '2021-08-29 07:27:47'),
+(13, 14, 3, 8, 'Girls  P-WIRE suitS', 'GPSP-1', 'Maroon', '400', '3000', '2', '400', '', '1620832080263_0..webp-91151.webp', 'Girls  P-WIRE suitS are the best asian dresses having every type of dresses', 'Not washable wash with hankds', 'Polyester', 'Self', 'Half Sleeve', 'Regular', '', 'Girls  P-WIRE suitS', 'Girls  P-WIRE suitS are the best asian dresses having every type of dresses', 'pwire girls kids dresses, kids dresses', 'Yes', 1, '2021-08-16 18:05:35', '2021-08-29 07:45:34'),
+(14, 14, 3, 8, 'Girls  P-WIRE suit', 'GPSG-2', 'violet', '400', '3500', '5', '500', 'SampleVideo_1280x720_1mb.mp4', 'a0c57e6f7c426b0f35dec00f32938225.jpg-30734.jpg', 'Girls  P-WIRE suitS are the best asian dresses having every type of dresses', 'Washable', 'Polyester', 'Self', 'Half Sleeve', 'Slim', '', 'Girls  P-WIRE suit', 'Girls  P-WIRE suitS are the best asian dresses having every type of dresses', 'Girls  P-WIRE suit, kids girls dresses, kids dresses', 'Yes', 1, '2021-08-16 18:08:50', '2021-08-29 07:42:19'),
+(15, 14, 3, 8, 'Girls  P-WIRE dress white light pinkish', 'GPSP-4', 'fuchsia', '400', '3500', '', '700', 'file_example_MP4_480_1_5MG.mp4', 'images.jpg-48361.jpg', 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'wash with hands', 'Polyester', 'Self', 'Half Sleeve', 'Slim', '', 'Girls  P-WIRE dress white light pinkish', 'lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum', 'Girls  P-WIRE dress white light pinkish, kids girls dress, kids dress', 'No', 1, '2021-08-17 03:02:57', '2021-08-29 19:05:01');
 
 -- --------------------------------------------------------
 
@@ -3075,9 +3231,7 @@ INSERT INTO `products_attributes` (`id`, `product_id`, `size`, `price`, `stock`,
 (5, 6, 'L', 1500.00, 30, 'sk-wh-01', 1, '2020-12-21 03:49:31', '2020-12-26 03:57:37'),
 (6, 6, 'M', 1200.00, 15, 'sk-wh-02', 1, '2020-12-21 03:50:50', '2020-12-26 03:57:37'),
 (7, 6, 'S', 1000.00, 15, 'sk-wh-03', 1, '2020-12-21 03:50:51', '2020-12-26 03:57:37'),
-(9, 1, 'L', 1600.00, 28, 'bl-cd--1', 1, '2020-12-26 03:06:52', '2021-08-15 19:01:34'),
-(10, 1, 'M', 1300.00, 18, 'bl-cd--2', 1, '2020-12-26 03:06:52', '2021-08-15 19:07:21'),
-(11, 1, 'S', 1000.00, 20, 'bl-cd--3', 1, '2020-12-26 03:06:52', '2021-08-15 19:01:34'),
+(10, 1, 'M', 850.00, 18, 'bl-cd--2', 1, '2020-12-26 03:06:52', '2021-09-01 20:30:51'),
 (12, 5, 'L', 5000.00, 30, 'sil-cd--1', 1, '2020-12-26 03:10:31', '2020-12-26 03:10:31'),
 (13, 5, 'M', 4000.00, 30, 'sil-cd--2', 1, '2020-12-26 03:10:31', '2020-12-26 03:10:31'),
 (14, 5, 'S', 3000.00, 20, 'sil-cd--3', 1, '2020-12-26 03:11:29', '2020-12-26 03:11:29'),
@@ -3088,7 +3242,15 @@ INSERT INTO `products_attributes` (`id`, `product_id`, `size`, `price`, `stock`,
 (19, 3, 'M', 700.00, 10, 'Bl-02', 1, '2021-08-07 04:46:58', '2021-08-07 04:46:58'),
 (20, 3, 'S', 650.00, 10, 'Bl-03', 1, '2021-08-07 04:46:58', '2021-08-07 04:46:58'),
 (23, 2, 'L', 1600.00, 10, 'GRC-1', 1, '2021-08-15 19:02:55', '2021-08-15 20:12:44'),
-(26, 2, 'M', 1500.00, 8, 'GRC-2', 1, '2021-08-15 20:38:10', '2021-08-15 20:38:15');
+(26, 2, 'M', 1500.00, 8, 'GRC-2', 1, '2021-08-15 20:38:10', '2021-08-15 20:38:15'),
+(27, 11, 'S', 2000.00, 25, 'BPSC-1', 1, '2021-08-16 17:56:08', '2021-08-16 17:56:08'),
+(28, 11, 'XS', 1500.00, 25, 'BPSC-2', 1, '2021-08-16 17:56:08', '2021-08-16 17:56:08'),
+(29, 12, 'S', 2500.00, 30, 'GPSK-1', 1, '2021-08-16 17:57:28', '2021-08-16 17:57:28'),
+(30, 12, 'XS', 2500.00, 30, 'GPSK-2', 1, '2021-08-16 17:57:28', '2021-08-16 17:57:28'),
+(31, 15, 'S', 3500.00, 18, 'FG-1', 1, '2021-08-17 03:33:04', '2021-08-17 04:21:18'),
+(32, 15, 'XS', 3000.00, 30, 'FG-2', 1, '2021-08-17 03:33:04', '2021-08-17 03:33:04'),
+(33, 1, 'L', 950.00, 10, 'bl-cd--34', 1, '2021-09-01 20:28:54', '2021-09-01 20:30:52'),
+(34, 1, 'S', 800.00, 10, 'bl-cd--3', 1, '2021-09-01 20:32:01', '2021-09-01 20:32:01');
 
 -- --------------------------------------------------------
 
@@ -3117,12 +3279,45 @@ INSERT INTO `products_images` (`id`, `product_id`, `image`, `status`, `created_a
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE `ratings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `review` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rating` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ratings`
+--
+
+INSERT INTO `ratings` (`id`, `user_id`, `product_id`, `review`, `rating`, `status`, `created_at`, `updated_at`) VALUES
+(1, 4, 15, 'Love this frock', 5, 1, '2021-09-04 17:46:50', '2021-09-04 17:46:50'),
+(2, 4, 1, 'wow what a shirt.nice', 5, 1, '2021-09-04 17:47:51', '2021-09-04 17:47:51'),
+(3, 6, 15, 'wow good one', 4, 1, '2021-09-04 17:49:06', '2021-09-04 17:49:06'),
+(4, 6, 5, 'Nice Pakistani dress', 5, 1, '2021-09-04 19:18:45', '2021-09-04 19:18:45'),
+(5, 6, 13, 'Nice dress', 3, 1, '2021-09-04 20:02:20', '2021-09-04 20:02:20'),
+(6, 5, 13, 'fazool ha yar', 1, 0, '2021-09-04 20:05:37', '2021-09-04 20:28:42'),
+(7, 4, 13, 'wow love this', 5, 1, '2021-09-04 20:07:22', '2021-09-04 20:07:22'),
+(8, 4, 14, 'wow Fairy like frock.', 5, 1, '2021-09-04 20:24:21', '2021-09-04 20:24:21'),
+(9, 6, 14, 'Love this lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum', 5, 1, '2021-09-04 20:26:02', '2021-09-04 20:26:02');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sections`
 --
 
 CREATE TABLE `sections` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(4) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -3132,10 +3327,11 @@ CREATE TABLE `sections` (
 -- Dumping data for table `sections`
 --
 
-INSERT INTO `sections` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Men', 1, NULL, '2020-12-21 13:46:25'),
-(2, 'Women', 1, NULL, '2020-12-21 13:42:26'),
-(3, 'Kids', 1, NULL, '2020-12-22 05:53:58');
+INSERT INTO `sections` (`id`, `name`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Men', '61488.jpg', 1, NULL, '2021-09-01 03:12:41'),
+(2, 'Women', '87066.jpg', 1, NULL, '2021-09-01 03:12:42'),
+(3, 'Kids', '45839.jpg', 1, NULL, '2021-09-01 04:22:35'),
+(4, 'Sports', '', 0, '2021-09-01 02:57:12', '2021-09-01 04:30:56');
 
 -- --------------------------------------------------------
 
@@ -3438,7 +3634,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `address`, `city`, `state`, `country`, `pincode`, `mobile`, `email`, `email_verified_at`, `password`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
 (4, 'Awais', 'Gujranwala main street', 'Gujranwala', 'Punjab', 'Pakistan', '3453', '0323432278767', 'dummy@gmail.com', NULL, '$2y$10$ir.p8E9I0OMFeikFPBsTYe0kFU319NUIIxlrfm5ZcOCtzppkdBbDq', 1, NULL, '2020-12-28 12:31:57', '2021-08-15 21:44:46'),
-(5, 'developer', '', '', '', '', '', '03234322897899', 'developer@gmail.com', NULL, '$2y$10$xK8DoJL.ze34ek.7P5yTPOlGEIpB3e4.0gm6EFE7DxEUkf3vEbcl6', 1, NULL, '2021-01-02 02:34:11', '2021-08-15 21:52:37');
+(5, 'developer', 'Islamabad Pakistan', 'Islamabad', 'Capital', 'Pakistan', '44000', '03234322897899', 'developer@gmail.com', NULL, '$2y$10$TGcBNoNTXX8gWnNI/sNsi.7wAy37SXB8UkZTat3/uhK.O2.6KOeM2', 1, NULL, '2021-01-02 02:34:11', '2021-09-02 03:36:48'),
+(6, 'Noor', '', '', '', '', '', '03034354245', 'noor@gmail.com', NULL, '$2y$10$FfP1nM2ZonboeZCtG5lZeOHZxWWvlIobB/TgywHZ6G8DiHmb0JJii', 1, NULL, '2021-09-02 03:56:22', '2021-09-02 04:07:47');
 
 --
 -- Indexes for dumped tables
@@ -3450,6 +3647,12 @@ INSERT INTO `users` (`id`, `name`, `address`, `city`, `state`, `country`, `pinco
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `admins_email_unique` (`email`);
+
+--
+-- Indexes for table `admins_roles`
+--
+ALTER TABLE `admins_roles`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `banners`
@@ -3482,6 +3685,12 @@ ALTER TABLE `chat_messages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `cms_pages`
+--
+ALTER TABLE `cms_pages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `cod_pincodes`
 --
 ALTER TABLE `cod_pincodes`
@@ -3500,6 +3709,12 @@ ALTER TABLE `coupons`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `currencies`
+--
+ALTER TABLE `currencies`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `delievery_addresses`
 --
 ALTER TABLE `delievery_addresses`
@@ -3511,6 +3726,12 @@ ALTER TABLE `delievery_addresses`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `front_settings`
+--
+ALTER TABLE `front_settings`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `migrations`
@@ -3540,6 +3761,12 @@ ALTER TABLE `orders_products`
 -- Indexes for table `order_statuses`
 --
 ALTER TABLE `order_statuses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `others_settings`
+--
+ALTER TABLE `others_settings`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3573,6 +3800,12 @@ ALTER TABLE `products_images`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sections`
 --
 ALTER TABLE `sections`
@@ -3599,7 +3832,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `admins_roles`
+--
+ALTER TABLE `admins_roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `banners`
@@ -3617,19 +3856,25 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `chat_messages`
 --
 ALTER TABLE `chat_messages`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cms_pages`
+--
+ALTER TABLE `cms_pages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `cod_pincodes`
@@ -3650,6 +3895,12 @@ ALTER TABLE `coupons`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT for table `currencies`
+--
+ALTER TABLE `currencies`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `delievery_addresses`
 --
 ALTER TABLE `delievery_addresses`
@@ -3662,34 +3913,46 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `front_settings`
+--
+ALTER TABLE `front_settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `orders_logs`
 --
 ALTER TABLE `orders_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `orders_products`
 --
 ALTER TABLE `orders_products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `order_statuses`
 --
 ALTER TABLE `order_statuses`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `others_settings`
+--
+ALTER TABLE `others_settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `prepaid_pincodes`
@@ -3701,13 +3964,13 @@ ALTER TABLE `prepaid_pincodes`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `products_attributes`
 --
 ALTER TABLE `products_attributes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `products_images`
@@ -3716,10 +3979,16 @@ ALTER TABLE `products_images`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `ratings`
+--
+ALTER TABLE `ratings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `sections`
 --
 ALTER TABLE `sections`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `shipping_charges`
@@ -3731,7 +4000,7 @@ ALTER TABLE `shipping_charges`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
