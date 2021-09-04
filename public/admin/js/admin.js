@@ -87,6 +87,29 @@
       }
     });
   });
+
+   // For Ratings status
+
+   $(".updateRatingStatus").click(function(){
+    var status=$(this).children('i').attr('status');
+    //alert(status); return false;
+    var rating_id=$(this).attr('rating_id');
+    $.ajax({
+      type:'post',
+      url:'/admin/update-rating-status',
+      data:{status:status,rating_id:rating_id},
+      success:function(resp){
+        //alert(resp); return false;
+        if (resp['status']==0) {
+          $('#rating-'+rating_id).html('<i style="font-size: 30px;" class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i>');
+        }else if(resp['status']==1){
+          $('#rating-'+rating_id).html('<i style="font-size: 30px;" class="fas fa-toggle-on" aria-hidden="true" status="Active"></i>');
+        }
+      },error:function(){
+        alert("Error");
+      }
+    });
+  });
    // For Currencies status
 
   $(".updateCurrencytatus").click(function(){

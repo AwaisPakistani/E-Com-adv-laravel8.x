@@ -96,13 +96,50 @@ use App\Models\Product;
 							</div>
 							<div>
 								<div class="product-rating">
+									@if(!empty($ratings))
+									@php
+									$totalRates=0;
+									foreach($ratings as $rate){
+									$totalRates=$totalRates+$rate->rating;
+									
+									}
+									$total_reviews=count($ratings);
+									$avg=$totalRates/$total_reviews;
+                                    $totalAvg=round($avg);
+									@endphp
+									@if($totalAvg==1)
+									<i class="fa fa-star"></i>
+									@elseif($totalAvg==2)
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									@elseif($totalAvg==3)
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									@elseif($totalAvg==4)
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o empty"></i>
+									@else
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									@endif
+									@endif
+									
 								</div>
-								<a href="#">3 Review(s) / Add Review</a>
+								
+								<a href="#reviews">
+									@if(!empty($ratings))
+									<!-- Number of reviews -->
+									{{count($ratings)}} Review(s) / Add Review
+									@else
+									Add Review
+									@endif
+								</a>
 							</div>
 							<p><strong>Availability :</strong> <b>{{$total_stock}}</b> items In Stock</p>
 							@if(!empty($productDetail['brand']['name']))
@@ -160,12 +197,18 @@ use App\Models\Product;
 					</div>
 				    </form>
 					<div class="col-md-12">
-						<div class="product-tab">
+						<div class="product-tab" id="reviews">
 							<ul class="tab-nav">
 								<li class="active"><a data-toggle="tab" href="#description">Description</a></li>
 								<li><a data-toggle="tab" href="#tab1">Details</a></li>
 								<li><a data-toggle="tab" href="#tab2">Product Video</a></li>
-								<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
+								<li><a data-toggle="tab" href="#tab3">
+									@if(!empty($ratings))
+									Reviews ({{count($ratings)}})
+									@else
+									Reviews (0)
+									@endif
+								</a></li>
 							</ul>
 							<div class="tab-content">
 								<div id="description" class="tab-pane fade in active">
@@ -215,59 +258,47 @@ use App\Models\Product;
 									<div class="row">
 										<div class="col-md-6">
 											<div class="product-reviews">
+												@if(!empty($ratings))
+												@foreach($ratings as $rating)
 												<div class="single-review">
 													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
+														
+														<div><a href="#"><i class="fa fa-user-o"></i> {{$rating->user->name}}</a></div>
+														<div><a href="#"><i class="fa fa-clock-o"></i> {{date("F j, Y, g:i a", strtotime($rating->created_at))}}</a></div>
 														<div class="review-rating pull-right">
+															@if($rating->rating==1)
+															<i class="fa fa-star"></i>
+															@elseif($rating->rating==2)
+															<i class="fa fa-star"></i>
+															<i class="fa fa-star"></i>
+															@elseif($rating->rating==3)
+															<i class="fa fa-star"></i>
+															<i class="fa fa-star"></i>
+															<i class="fa fa-star"></i>
+															@elseif($rating->rating==4)
 															<i class="fa fa-star"></i>
 															<i class="fa fa-star"></i>
 															<i class="fa fa-star"></i>
 															<i class="fa fa-star"></i>
+															@elseif($rating->rating==5)
+															<i class="fa fa-star"></i>
+															<i class="fa fa-star"></i>
+															<i class="fa fa-star"></i>
+															<i class="fa fa-star"></i>
+															<i class="fa fa-star"></i>
+															@else
 															<i class="fa fa-star-o empty"></i>
+															@endif
 														</div>
 													</div>
 													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+														<p>{{$rating->review}}</p>
 													</div>
 												</div>
-
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
+										 		@endforeach
+												@else
+												<p>This product is not rated yet.</p>
+												@endif
 
 												<ul class="reviews-pages">
 													<li class="active">1</li>
@@ -279,17 +310,23 @@ use App\Models\Product;
 										</div>
 										<div class="col-md-6">
 											<h4 class="text-uppercase">Write Your Review</h4>
-											<p>Your email address will not be published.</p>
-											<form class="review-form">
-												<div class="form-group">
+											<!-- <p>Your email address will not be published.</p> -->
+											<form action="{{url('/add-rating')}}" method="post" class="review-form" name="ratingForm" id="ratingForm">@csrf
+												<!-- <div class="form-group">
 													<input class="input" type="text" placeholder="Your Name" />
 												</div>
 												<div class="form-group">
 													<input class="input" type="email" placeholder="Email Address" />
+												</div> -->
+												<div class="form-group">
+													<input class="input" type="hidden" name="user_id" value="" />
 												</div>
 												<div class="form-group">
-													<textarea class="input" placeholder="Your review"></textarea>
+													<input class="input" type="hidden" name="product_id" value="{{$productDetail['id']}}"/>
 												</div>
+												<div class="form-group">
+													<textarea class="input" name="review" placeholder="Your review" required></textarea>
+												</div>  
 												<div class="form-group">
 													<div class="input-rating">
 														<strong class="text-uppercase">Your Rating: </strong>

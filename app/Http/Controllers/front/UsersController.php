@@ -14,13 +14,13 @@ use Auth;
 
 class UsersController extends Controller
 {
-    public function login_register(){
-    	return view('front.users.login_register');
-    }
+    // public function login_register(){
+    // 	return view('front.users.login_register');
+    // }
 
-    public function register_user(Request $request){
+    public function login_register(Request $request){
         if ($request->isMethod('post')) {
-           $data=$request->all();
+           $data=$request->except('_token');
            //echo "<pre>"; print_r($data); die;
            $userCount=User::where('email',$data['email'])->count();
            if ($userCount>0) {
@@ -68,9 +68,11 @@ class UsersController extends Controller
                    //return redirect('/t-shirts');
                }*/
                
-               return redirect()->back();
+               
            }
         }
+        // here
+        return view('front.users.login_register');
     }//
      public function login_user(Request $request){
        if ($request->isMethod('post')) {
@@ -149,8 +151,8 @@ class UsersController extends Controller
       return view('front.users.forgot_password');
     }
 
-    public function confirm_account($email){
-      $email=base64_decode($email);
+    public function confirm_account($code){
+      $email=base64_decode($code);
       $userCount=User::where('email',$email)->count();
       if ($userCount>0) {
         $userDetails=User::where('email',$email)->first();
@@ -167,7 +169,7 @@ class UsersController extends Controller
           });
           $message="You email account is activated. You can login now";
           Session::flash('success_message',$message);
-          return redirect('/cart');
+          return redirect('/login-register');
           //return redirect('/t-shirts');
           
         }

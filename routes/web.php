@@ -14,6 +14,7 @@ use App\Http\Controllers\admin\userController;
 use App\Http\Controllers\admin\CmsController;
 use App\Http\Controllers\admin\frontSettingsController;
 use App\Http\Controllers\admin\CurrencyController;
+use App\Http\Controllers\admin\RatingController;
 
 // Front 
 use App\Http\Controllers\front\IndexController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\front\UsersController;
 use App\Http\Controllers\front\OrdersController;
 use App\Http\Controllers\front\PaypalController;
 use App\Http\Controllers\front\CmsPageController;
+use App\Http\Controllers\front\RatingsController;
 
 // use model for route 
 use App\Models\Category;
@@ -148,11 +150,16 @@ Route::prefix('admin')->namespace('admin')->group(function () {
      Route::get('currencies',[CurrencyController::class, 'currencies']);
      Route::post('/update-currency-status', [CurrencyController::class, 'update_currencies_status']);
      Route::match(['get', 'post'], '/add-edit-currency/{id?}', [CurrencyController::class, 'add_edit_currency']); 
-      Route::get('/delete-currency/{id}', [CurrencyController::class, 'delete_currency']);
+     Route::get('/delete-currency/{id}', [CurrencyController::class, 'delete_currency']);
+     
+     // Ratings routes
+     Route::get('ratings',[RatingController::class, 'ratings']);
+     Route::post('/update-rating-status', [RatingController::class, 'update_ratings_status']);
  });
 });
 
-
+// Add Rating Front Controllers
+Route::match(['get','post'],'/add-rating',[RatingsController::class,'add_rating']);
 
 Route::namespace('front')->group(function(){
    // Home page Routes
@@ -183,13 +190,14 @@ Route::namespace('front')->group(function(){
 
    // Routes for User Authemtiacation 
    //Routes for login/register
-   Route::get('/login-register', [UsersController::class, 'login_register'])->name('login');
+   //Route::get('/login-register', [UsersController::class, 'login_register'])->name('login');
+   Route::match(['get', 'post'], '/login-register', [UsersController::class, 'login_register'])->name('login');
    
   // Route::get('/login-register',['as'=>'login','uses'=>'UsersController@login_register']);
    // Route for Login
    Route::post('/login', [UsersController::class, 'login_user']);
     // Route for Register
-   Route::post('/register', [UsersController::class, 'register_user']);
+   //Route::post('/register', [UsersController::class, 'register_user']);
    // Route for logout
    Route::get('/logout', [UsersController::class, 'logout']);
    // forgot password route

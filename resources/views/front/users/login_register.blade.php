@@ -39,7 +39,7 @@
 			<div class="row">
 				
 					<div class="col-md-6">
-						<form action="{{url('/register')}}" method="post" id="register-form" class="clearfix">@csrf
+						<form action="{{url('/login-register')}}" method="post" id="register-form" class="clearfix">@csrf
 						<div class="billing-details">
 							<div class="section-title">
 								<h3 class="title">Create an Account</h3>
@@ -60,7 +60,7 @@
 								<input type="checkbox" name="terms" required="">
 							</div>
 							<div class="form-group">
-								 <input type="submit" class="primary-btn" name="register" value="Create an Account">
+								 <input type="submit" class="primary-btn" value="Create an Account">
 							</div>
 						</div>
 					    </form>

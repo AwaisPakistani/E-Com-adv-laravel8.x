@@ -23,6 +23,7 @@ use App\Models\ShippingCharge;
 use App\Models\OthersSetting;
 use App\Models\Brand;
 use App\Models\Currency;
+use App\Models\Rating;
 use DB;
 use Session;
 use Auth;
@@ -173,7 +174,7 @@ class ProductController extends Controller
         $productDetail=Product::with(['category','brand','attributes'=>function($query){
             $query->where('status',1);
         },'images'])->find($id)->toArray();
-
+        //dd($productDetail); die;
         // frelated products
         $relatedProducts=Product::where('category_id',$productDetail['category']['id'])->where('id','!=',$id)->limit(4)->inRandomOrder()->get()->toArray();
         //dd($relatedProducts); die();
@@ -184,6 +185,14 @@ class ProductController extends Controller
             $groupProducts=Product::select('id','product_color')->where('id','!=',$id)->where(['group_code'=>$productDetail['group_code'],'status'=>1])->get()->toArray();
             //dd($groupProducts); die;
         }
+        // Ratings
+        $ratings=Rating::with('user')->where(['product_id'=>$id,'status'=>1])->get();
+        $ratings=json_decode(json_encode($ratings));
+        //dd($ratings); die;
+        
+        
+        //echo $userName['name']; die;
+
         // Currencies
         $getCurrencies=Currency::select('currency_code','currency_rate')->where('status',1)->get()->toArray();
         //dd($getCurrencies); die;
@@ -191,7 +200,7 @@ class ProductController extends Controller
         $meta_title=$productDetail['meta_title'];
         $meta_description=$productDetail['meta_description'];
         $meta_keywords=$productDetail['meta_keywords'];
-        return view('front.products.product_detail')->with(compact('productDetail','total_stock','relatedProducts','groupProducts','meta_title','meta_description','meta_keywords','getCurrencies'));
+        return view('front.products.product_detail')->with(compact('productDetail','total_stock','relatedProducts','groupProducts','meta_title','meta_description','meta_keywords','getCurrencies','ratings'));
     }
 
     public function get_product_price(Request $request){
