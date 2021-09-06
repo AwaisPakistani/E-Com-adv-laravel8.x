@@ -31,6 +31,13 @@ class ProductController extends Controller
 {
     public function listing(Request $request){
         Paginator::useBootstrap();
+        // Top Rated product
+        $topRatedProduct=Rating::with('product')->select('product_id','rating')->where(['rating'=>5,'status'=>1])->get()->toArray();
+        //echo "<pre>"; print_r($topRatedProduct); die;
+        //dd($topRatedProduct); die;
+        
+        // $topRatedProduct=Product::topRated($ratingId['product_id']);
+        // dd($topRatedProduct); die;
     	if ($request->ajax()) {
     		$data=$request->all();
     		$url=$data['url'];
@@ -45,6 +52,8 @@ class ProductController extends Controller
     		// With Pagination
     		$categoryProducts=Product::with('brand')->whereIn('category_id',$categoryDetails['catIds'])->where('status',1);
             //echo $data['sort']; die();
+            
+            //dd($topRatedProduct); die;
             //echo "<pre>"; print_r($data); die();
             if (isset($data['brand']) && !empty($data['brand'])) {
             $brandIds=Brand::select('id')->whereIn('name',$data['brand'])->pluck('id');
@@ -98,7 +107,9 @@ class ProductController extends Controller
             // Brand Array
             $brandArray=Brand::select('name')->where('status',1)->pluck('name');
             //dd($brandArray); die;
-
+            // Top Rated Product
+            
+            //dd($topRatedProduct); die;
     		return view('front.products.ajax_products_listing')->with(compact('categoryDetails','categoryProducts','showSide','url','fabricArray','sleeveArray','patternArray','brandArray','fitArray','occassionArray'));
     	    }else{
     	    	abort(404);
@@ -163,7 +174,8 @@ class ProductController extends Controller
         // Brand Filter
         $brandArray=Brand::select('name')->where('status',1)->pluck('name');
         $page_name='';
-    		return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','showSide','url','fabricArray','sleeveArray','patternArray','fitArray','occassionArray','page_name','meta_title','meta_description','meta_keywords','brandArray'));
+       
+    		return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','showSide','url','fabricArray','sleeveArray','patternArray','fitArray','occassionArray','page_name','meta_title','meta_description','meta_keywords','brandArray','topRatedProduct'));
     	}else{
     		abort(404);
     	}

@@ -90,7 +90,7 @@ use App\Models\Product;
 										
 
 
-										<td class="text-right"><button class="main-btn icon-btn btnItemDelete" remove_cartId="{{$cart['id']}}"><i class="fa fa-close" onclick="return confirm('Are you sure you want to delete this coupon?')"></i></button></td>
+										<td class="text-right"><button class="main-btn icon-btn btnItemDelete" remove_cartId="{{$cart['id']}}"><i class="fa fa-close"></i></button></td>
 										
 									</tr>
 									@endforeach

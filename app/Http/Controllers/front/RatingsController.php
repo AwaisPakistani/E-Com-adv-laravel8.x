@@ -16,6 +16,8 @@ class RatingsController extends Controller
         if ($request->isMethod('post')) {
             $data=$request->except('_token');
             //echo "<pre>"; print_r($data); die;
+            // check if no star is selected
+           
             if (!Auth::check()) {
                 $message="Please login first to rate this product";
                 Session::flash('error_message',$message);
@@ -30,12 +32,17 @@ class RatingsController extends Controller
                 Session::flash('error_message',$message);
                 return redirect()->back();
             }
+            if (!isset($data['rating'])) {
+                $message="Please select atleast one star rating";
+                Session::flash('error_message',$message);
+                return redirect()->back();
+            }
             $rating=new Rating;
             $rating->user_id=$user_id;
             $rating->product_id=$data['product_id'];
             $rating->review=$data['review'];
             $rating->rating=$data['rating'];
-            $rating->status=1;
+            $rating->status=0;
             $rating->save();
             
             $message="You have successfully rated this product";

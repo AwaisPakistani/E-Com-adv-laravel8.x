@@ -1,5 +1,6 @@
 <?php
 use App\Models\Product;
+use App\Models\Rating;
 ?>
 @foreach($categoryProducts as $product)
 
@@ -29,11 +30,65 @@ use App\Models\Product;
                                               PKR :  {{ $product['product_price']}}
                                               @endif
 										<div class="product-rating" style="font-size: 15px;">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
+										<?php
+										$ratings=Rating::with('user')->where(['product_id'=>$product['id'],'status'=>1])->get();
+										$ratings=json_decode(json_encode($ratings));
+										?>
+											@if(!empty($ratings))
+								            	@php
+								            	$totalRates=0;
+								            	foreach($ratings as $rate){
+								            	$totalRates=$totalRates+$rate->rating;
+								            	
+								            	}
+								            	$total_reviews=count($ratings);
+								            	$avg=$totalRates/$total_reviews;
+                                                $totalAvg=round($avg);
+								            	@endphp
+								            	   @if($totalAvg==1)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==2)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==3)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==4)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==5)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        @else
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	   @endif
+											@else
+											     <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								            @endif
 										</div>
 										<h2 class="product-name"><a href="#">{{ $product['product_name']}}</a></h2>
 										<h4>@if(!empty($product['brand']['name'])) {{$product['brand']['name']}}  @endif</h4>

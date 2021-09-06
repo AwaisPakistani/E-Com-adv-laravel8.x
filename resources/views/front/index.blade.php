@@ -3,6 +3,7 @@
 <?php 
 use App\Models\Banner;
 use App\Models\Product;
+use App\Models\Rating;
 
 $banners=Banner::getBanners();
 //echo "<pre>"; print_r($banners);
@@ -170,11 +171,65 @@ $banners=Banner::getBanners();
                                       <del class="product-old-price">PKR : {{$fitem->product_price}}</del>
                                       @endif
 									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
+										    <?php
+											$ratings=Rating::with('user')->where(        ['product_id'=>$fitem['id'],'status'=>1])->get();
+											$ratings=json_decode(json_encode($ratings));
+											?>
+									        @if(!empty($ratings))
+								            	@php
+								            	$totalRates=0;
+								            	foreach($ratings as $rate){
+								            	$totalRates=$totalRates+$rate->rating;
+								            	
+								            	}
+								            	$total_reviews=count($ratings);
+								            	$avg=$totalRates/$total_reviews;
+                                                $totalAvg=round($avg);
+								            	@endphp
+								            	   @if($totalAvg==1)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==2)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==3)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==4)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==5)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        @else
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	   @endif
+											@else
+											     <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								            @endif
 									</div>
 									<h2 class="product-name"><a href="#">{{$fitem->product_name}}</a></h2>
 									<div class="product-btns">
@@ -548,11 +603,65 @@ $banners=Banner::getBanners();
                             PKR : {{$lap['product_price']}}
                             @endif							</h3>
 							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
+							                <?php
+											$ratings=Rating::with('user')->where(        ['product_id'=>$lap['id'],'status'=>1])->get();
+											$ratings=json_decode(json_encode($ratings));
+											?>
+									        @if(!empty($ratings))
+								            	@php
+								            	$totalRates=0;
+								            	foreach($ratings as $rate){
+								            	$totalRates=$totalRates+$rate->rating;
+								            	
+								            	}
+								            	$total_reviews=count($ratings);
+								            	$avg=$totalRates/$total_reviews;
+                                                $totalAvg=round($avg);
+								            	@endphp
+								            	   @if($totalAvg==1)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==2)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==3)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==4)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==5)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        @else
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	   @endif
+											@else
+											     <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								            @endif
 							</div>
 							<h2 class="product-name"><a href="#">{{ $lap['product_name'] }}</a></h2>
 							<div class="product-btns">

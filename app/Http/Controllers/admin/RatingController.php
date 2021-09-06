@@ -11,7 +11,7 @@ class RatingController extends Controller
 {
     public function ratings(){
         Session::put('page','ratings');
-        $ratings=Rating::with('user','product')->where('status',1)->get();
+        $ratings=Rating::with('user','product')->get();
         $ratings=json_decode(json_encode($ratings));
         //echo "<pre>"; print_r($ratings); die;
         return view('admin.ratings.ratings')->with(compact('ratings'));

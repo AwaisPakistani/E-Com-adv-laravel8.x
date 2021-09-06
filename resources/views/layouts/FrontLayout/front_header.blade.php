@@ -105,27 +105,12 @@
 								</div>
 								<strong class="text-uppercase">My Cart:</strong>
 								<br>
-								<span>35.20$</span>
+								<span>PKR : {{totalPrice()}}</span>
 							</a>
 							<div class="custom-menu">
 								<div id="shopping-cart">
 									<div class="shopping-cart-list">
-										@foreach($usercartItems as $cart)
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="{{asset('images/admin/products/small/'.$cart['product']['main_image'])}}" alt="image">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price">{{$cart['product']['product_price']}}<span class="qty">x{{$cart['quantity']}}</span></h3>
-												<h2 class="product-name"><a href="#">{{$cart['product']['product_name']}}</a></h2>
-												<h2 class="product-name"><a href="#">Size : {{$cart['size']}}</a></h2>
-											</div>
-											<!-- <button class="cancel-btn"><i class="fa fa-trash"></i></button> -->
-										</div>
-										@endforeach
-										
-										
-										
+										{{headerCart()}}
 									</div>
 									<div class="shopping-cart-btns">
 										<a href="{{url('/cart')}}" class="main-btn">View Cart</a>

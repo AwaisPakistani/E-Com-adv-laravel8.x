@@ -109,24 +109,40 @@ use App\Models\Product;
 									@endphp
 									@if($totalAvg==1)
 									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o-empty"></i>
+									<i class="fa fa-star-o-empty"></i>
+									<i class="fa fa-star-o-empty"></i>
+									<i class="fa fa-star-o-empty"></i>
 									@elseif($totalAvg==2)
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o-empty"></i>
+									<i class="fa fa-star-o-empty"></i>
+									<i class="fa fa-star-o-empty"></i>
 									@elseif($totalAvg==3)
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o-empty"></i>
+									<i class="fa fa-star-o-empty"></i>
 									@elseif($totalAvg==4)
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o-empty"></i>
+									@elseif($totalAvg==5)
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
 									@else
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o-empty"></i>
+									<i class="fa fa-star-o-empty"></i>
+									<i class="fa fa-star-o-empty"></i>
+									<i class="fa fa-star-o-empty"></i>
+									<i class="fa fa-star-o-empty"></i>
 									@endif
 									@endif
 									
@@ -136,8 +152,8 @@ use App\Models\Product;
 									@if(!empty($ratings))
 									<!-- Number of reviews -->
 									{{count($ratings)}} Review(s) / Add Review
-									@else
-									Add Review
+									@else 
+									0 Review / Add Review
 									@endif
 								</a>
 							</div>

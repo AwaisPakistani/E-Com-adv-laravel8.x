@@ -1,6 +1,9 @@
 @extends('layouts.frontLayout.front_layout')
 @section('content')
-
+<?php
+use App\Models\Product;
+use App\Models\Rating;
+?>
 <!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
@@ -121,42 +124,92 @@
 					<div class="aside">
 						<h3 class="aside-title">Top Rated Product</h3>
 						<!-- widget product -->
+						@foreach($topRatedProduct as $topRated)
 						<div class="product product-widget">
+						
 							<div class="product-thumb">
-								<img src="./img/thumb-product01.jpg" alt="">
+								<img src="{{asset('images/admin/products/small/'.$topRated['product']['main_image'])}}" alt="Image">
+							
 							</div>
 							<div class="product-body">
-								<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-								<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+								<h2 class="product-name"><a href="{{url('product/'.$topRated['product']['id'])}}">{{$topRated['product']['product_name']}}</a></h2>
+								<h3 class="product-price">
+								              <?php $discountedPrice=Product::getDiscountedPrice($topRated['product']['id']);; ?>
+                                              @if($discountedPrice > 0)
+                                              PKR : <?php echo $discountedPrice; ?>
+                                              <span style="font-size: 15px;color:red;"><del>PKR : {{ $topRated['product']['product_price']}}</del></span></h3>
+                                              @else
+                                              PKR :  {{ $topRated['product']['product_price']}}
+                                              @endif
+							</h3>
 								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o empty"></i>
+								<?php
+										$ratings=Rating::with('user')->where(['product_id'=>$topRated['product']['id'],'status'=>1])->get();
+										$ratings=json_decode(json_encode($ratings));
+										?>
+											@if(!empty($ratings))
+								            	@php
+								            	$totalRates=0;
+								            	foreach($ratings as $rate){
+								            	$totalRates=$totalRates+$rate->rating;
+								            	
+								            	}
+								            	$total_reviews=count($ratings);
+								            	$avg=$totalRates/$total_reviews;
+                                                $totalAvg=round($avg);
+								            	@endphp
+								            	   @if($totalAvg==1)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==2)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==3)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==4)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        @elseif($totalAvg==5)
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        <i class="fa fa-star"></i>
+								            	        @else
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	        <i class="fa fa-star-o empty"></i>
+								            	   @endif
+											@else
+											     <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								                 <i class="fa fa-star-o empty"></i>
+								            @endif
 								</div>
 							</div>
+											
+						
 						</div>
+						@endforeach
 						<!-- /widget product -->
 
-						<!-- widget product -->
-						<div class="product product-widget">
-							<div class="product-thumb">
-								<img src="./img/thumb-product01.jpg" alt="">
-							</div>
-							<div class="product-body">
-								<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-								<h3 class="product-price">$32.50</h3>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o empty"></i>
-								</div>
-							</div>
-						</div>
-						<!-- /widget product -->
 					</div>
 					<!-- /aside widget -->
 				</div>

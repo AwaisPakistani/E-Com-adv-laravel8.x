@@ -47,39 +47,32 @@
             <!-- /.card-header -->
             <div class="card-body">
               <table id="example1" class="table table-bordered table-striped">
-                <thead>
+              <thead>
                 <tr>
                   <th>ID</th>
                   <th>Product Name</th>
                   <th>User Email</th>
                   <th>Review</th>
                   <th>Rating</th>
-                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($ratings as $rating)
-                <tr>
-                  <td>{{ $rating->id }}</td>
-                  <td>{{ $rating->product->product_name }}</td>
-                  <td>{{ $rating->user->email }}</td>
-                  <td>{{ $rating->review }}</td>
-                  <td>{{ $rating->rating }}</td>
-                  <td>
-                      
-                  
-                  @if($rating->status==1)
+               @foreach($ratings as $rating)
+               <tr>
+                 <td>{{$rating->id}}</td>
+                 <td>{{$rating->product->product_name}}</td>
+                 <td>{{$rating->user->email}}</td>
+                 <td>{{$rating->review}}</td>
+                 <td>{{$rating->rating}}</td>
+                 <td>
+                 @if($rating->status==1)
                   <a class="updateRatingStatus" id="rating-{{$rating->id}}" rating_id="{{ $rating->id }}" href="javascript:void(0);"><i style="font-size: 30px;" class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
                   @else
                   <a class="updateRatingStatus" id="rating-{{$rating->id}}" rating_id="{{ $rating->id }}" href="javascript:void(0);"><i style="font-size: 30px;" class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
                   @endif
-                  </td>
-                  
-                  <td>
-                  
                  </td>
-                  
-                </tr>
+               </tr>
                @endforeach
                 </tbody>
                 <tfoot> 
@@ -89,9 +82,10 @@
                   <th>User Email</th>
                   <th>Review</th>
                   <th>Rating</th>
-                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
                 </tfoot>
+               
               </table>
             </div>
             <!-- /.card-body -->

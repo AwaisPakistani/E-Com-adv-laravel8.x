@@ -20,6 +20,10 @@ class Product extends Model
         return $this->belongsTo('App\Models\Brand','brand_id');
     }
 
+    public function rating(){
+        return $this->belongsTo('App\Models\Rating','product_id');
+    }
+
     public function attributes(){
     	return $this->hasMany('App\Models\ProductsAttribute');
     }
@@ -105,4 +109,8 @@ class Product extends Model
     public static function deleteCartProduct($product_id){
         Cart::where('product_id',$product_id)->delete();
     }//
+    // public static function topRated($product_id){
+    //     $topRated=Product::where('id',$product_id)->get()->toArray();
+    //     return $topRated;
+    // }
 }
